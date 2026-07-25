@@ -1,0 +1,2500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dhruv Dawre - Knitwear Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+    :root {
+    --bg: #e5edf0;
+    --bg2: #e5edf0;
+    --surface: #CED8E4;
+    --surface2: #CED8E4;
+    --border: rgba(111,133,150,0.22);
+    --blue: #0D3B66;
+    --blue-dim: rgba(13,59,102,.08);
+    --coral: #D09E57;
+    --coral-dim: rgba(208,158,87,.16);
+    --neon: #5D7A78;
+    --neon-dim: rgba(93,122,120,.14);
+    --sage: #6F8596;
+    --sage-dim: rgba(111,133,150,.18);
+    --beige:#A0AAB6;
+    --grey:#6D7C75;
+    --white:#0D3B66;
+    --white-dim:#5D7A78;
+    --white-faint:rgba(13,59,102,.05);
+    --pearl:#E5E2D0;
+    --mist:#9FB7C9;
+    --lavender:#B1BACB;
+    --warm-ivory:#EAE0C8;
+    --pale-sage:#BFCAB5;
+    --light-lilac:#B1BEB7;
+    --warm-sand:#BBBBA1;
+    --mustard:#E7C78A;
+    --soft-stone:#CED8E4;
+    --light-beige:#DAAF88;
+}
+
+body{
+ user-select:none;
+ -webkit-user-select:none;
+ -webkit-touch-callout:none;
+}
+input,textarea{user-select:text;}
+img{
+ -webkit-user-drag:none;
+ user-drag: none;
+ pointer-events:none;
+}
+@media print{
+ body{display:none!important;}
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: none;
+}
+
+/* ── CURSOR ── */
+#cur {
+    width: 8px;
+    height: 8px;
+    background: var(--blue);
+    border-radius: 50%;
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width .2s, height .2s, background .2s;
+    mix-blend-mode: multiply;
+}
+
+#cur2 {
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(13, 59, 102, 0.35);
+    border-radius: 50%;
+    position: fixed;
+    z-index: 9998;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: transform .18s cubic-bezier(.23, 1, .32, 1);
+}
+
+/* ── ANIMATED BG CANVAS ── */
+#bgCanvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+/* ── GRAIN OVERLAY ── */
+.grain {
+    position: fixed;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.012;
+    pointer-events: none;
+    z-index: 1;
+    animation: grainMove 0.5s steps(2) infinite;
+}
+
+@keyframes grainMove {
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(-1%, 1%); }
+    50%  { transform: translate(1%, -1%); }
+    75%  { transform: translate(-1%, -1%); }
+    100% { transform: translate(1%, 1%); }
+}
+
+/* ── NAV ── */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1.4rem 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: var(--blue);
+    backdrop-filter: blur(20px);
+}
+
+.nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--mustard);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.nav-logo-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--blue);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%       { transform: scale(1.5); opacity: 0.4; }
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+}
+
+.nav-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    text-decoration: none;
+    transition: color .25s;
+    position: relative;
+}
+
+.nav-links a::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--blue);
+    transition: width .3s ease;
+}
+
+.nav-links a:hover { color: #DAAF88; }
+.nav-links a:hover::before { width: 100%; }
+
+.nav-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--neon);
+    border: 1px solid rgba(93, 122, 120, 0.4);
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    background: rgba(93, 122, 120, 0.08);
+}
+
+.nav-badge:hover { 
+    color: rgb(218, 175, 136);
+    border: 1px solid rgba(218, 175, 136);
+}
+
+
+/* ── HERO ── */
+#hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 3.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.hero-top-badge {
+    position: absolute;
+    top: 7rem;
+    right: 3.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--coral);
+    border: 1px solid rgba(208, 158, 87, 0.4);
+    padding: 0.4rem 1rem;
+    border-radius: 2px;
+    background: rgba(208, 158, 87, 0.08);
+    animation: fadeSlideIn 1s ease 0.8s both;
+}
+
+@keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+.float-doodle {
+    position: absolute;
+    pointer-events: none;
+    animation: floatY 7s ease-in-out infinite;
+    z-index: 3;
+}
+
+@keyframes floatY {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33%       { transform: translateY(-14px) rotate(4deg); }
+    66%       { transform: translateY(-6px) rotate(-3deg); }
+}
+
+.hero-bg-num {
+    position: absolute;
+    right: -0.05em;
+    bottom: -0.1em;
+    font-size: clamp(18rem, 30vw, 28rem);
+    font-weight: 800;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(13, 59, 102, 0.06);
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+}
+
+.hero-semester {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 1.5rem;
+    animation: fadeSlideIn 0.8s ease 0.2s both;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    z-index: 4;
+    position: relative;
+}
+
+.hero-semester::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--sage);
+}
+
+.hero-name {
+    font-size: clamp(3.8rem, 9vw, 8.5rem);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    z-index: 4;
+    position: relative;
+    animation: heroNameIn 1s cubic-bezier(.16, 1, .3, 1) 0.3s both;
+}
+
+@keyframes heroNameIn {
+    from { opacity: 0; transform: translateY(50px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-name .line1 { display: block; color: var(--blue); }
+.hero-name .line2 {
+    display: block;
+    background: linear-gradient(90deg, var(--sage), var(--coral));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-desc-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+    z-index: 4;
+    position: relative;
+    animation: fadeSlideIn 0.8s ease 0.7s both;
+}
+
+.hero-desc {
+    font-size: 0.88rem;
+    line-height: 1.9;
+    color: var(--white-dim);
+    max-width: 380px;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+}
+
+.hero-cta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blue);
+    text-decoration: none;
+    border: 1px solid var(--blue);
+    padding: 0.9rem 2rem;
+    border-radius: 2px;
+    transition: all 0.3s;
+    white-space: nowrap;
+    background: transparent;
+}
+
+.hero-cta:hover {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: var(--warm-ivory);
+    gap: 1.5rem;
+}
+
+.hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--grey);
+    z-index: 5;
+}
+
+.hero-scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--grey), transparent);
+    animation: scrollLine 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollLine {
+    0%   { transform: scaleY(0); transform-origin: top; }
+    50%  { transform: scaleY(1); transform-origin: top; }
+    51%  { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ── MARQUEE ── */
+.marquee-band {
+    position: relative;
+    z-index: 5;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--pale-sage);
+    overflow: hidden;
+    padding: 0.75rem 0;
+}
+
+.marquee-track {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: marqueeRun 30s linear infinite;
+}
+
+.marquee-item {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 0 2.5rem;
+    color: var(--grey);
+}
+
+.marquee-item.accent  { color: var(--blue); }
+.marquee-item.accent2 { color: var(--coral); }
+.marquee-item.accent3 { color: var(--neon); }
+
+@keyframes marqueeRun {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+/* ── SECTIONS ── */
+section { position: relative; z-index: 5; }
+
+.sec-wrap { padding: 8rem 3.5rem; }
+
+.sec-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.sec-label::before {
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: var(--blue);
+}
+
+.sec-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--blue);
+}
+
+.sec-title em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--coral);
+}
+
+/* ── ABOUT ── */
+#about {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    margin-top: 4rem;
+    align-items: start;
+}
+
+.profile-card-wrap { position: relative; }
+
+.profile-tape-1 {
+    position: absolute;
+    top: -8px; left: 55px;
+    width: 75px; height: 20px;
+    transform: rotate(-5deg);
+    background: rgba(13, 59, 102, 0.18);
+    border-radius: 2px;
+    z-index: 15;
+    pointer-events: none;
+}
+
+.profile-tape-2 {
+    position: absolute;
+    bottom: 50px; right: 20px;
+    width: 60px; height: 17px;
+    transform: rotate(8deg);
+    background: rgba(93, 122, 120, 0.2);
+    border-radius: 2px;
+    z-index: 15;
+    pointer-events: none;
+}
+
+.profile-photo {
+    width: 100%;
+    height: 520px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    position: relative;
+    background: var(--soft-stone);
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+}
+
+.profile-photo::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(234, 224, 200, 0.7), transparent);
+    pointer-events: none;
+}
+
+.profile-photo-name {
+    position: absolute;
+    bottom: 1.5rem; left: 1.5rem;
+    z-index: 5;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: rgba(13, 59, 102, 0.55);
+}
+
+.stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin-top: 1px;
+    background: var(--border);
+}
+
+.stat-box {
+    background: var(--surface2);
+    padding: 1.5rem;
+}
+
+.stat-num {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--blue);
+}
+
+.stat-num span { color: var(--coral); }
+
+.stat-lbl {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-top: 0.3rem;
+}
+
+.about-intro {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.35rem;
+    line-height: 1.7;
+    color: var(--blue);
+    margin: 1.5rem 0;
+    font-style: italic;
+}
+
+.about-body {
+    font-size: 0.85rem;
+    line-height: 2;
+    color: var(--white-dim);
+    margin-bottom: 1.2rem;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.skill-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 0.9rem;
+    border-radius: 2px;
+    cursor: default;
+    transition: all .3s;
+}
+
+.tag-blue  { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(13, 59, 102, 0.2); }
+.tag-coral { background: var(--coral-dim); color: #a07030; border: 1px solid rgba(208, 158, 87, 0.3); }
+.tag-sage  { background: var(--sage-dim); color: var(--sage); border: 1px solid rgba(111, 133, 150, 0.25); }
+.tag-neon  { background: var(--neon-dim); color: var(--neon); border: 1px solid rgba(93, 122, 120, 0.25); }
+
+.skill-tag:hover { transform: translateY(-2px); }
+
+/* Croquis card */
+.about-visual { position: relative; }
+
+.croquis-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    height: 480px;
+    object-fit:cover;
+}
+
+.croquis-card::after {
+    content: 'NIFT · 3rd YEAR';
+    position: absolute;
+    bottom: 1.2rem; right: 1.2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--grey);
+}
+
+.tape-h {
+    position: absolute;
+    pointer-events: none;
+    z-index: 10;
+    background: rgba(13, 59, 102, 0.12);
+    border-radius: 2px;
+}
+
+/* ── PORTFOLIO ── */
+#portfolio {
+    background: var(--warm-ivory);
+    border-top: 1px solid var(--border);
+}
+
+.port-filter {
+    display: flex;
+    gap: 0;
+    margin: 2.5rem 0 0;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    width: fit-content;
+}
+
+.pf-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.5rem;
+    background: none;
+    border: none;
+    border-right: 1px solid var(--border);
+    color: var(--grey);
+    cursor: none;
+    transition: all .25s;
+}
+
+.pf-btn:last-child { border-right: none; }
+.pf-btn:hover { color: var(--blue); background: rgba(13, 59, 102, 0.06); }
+.pf-btn.active { background: var(--blue); color: var(--warm-ivory); }
+
+.port-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 1px;
+    background: var(--border);
+}
+
+.port-item {
+    background: var(--surface2);
+    aspect-ratio: 4/5;
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+}
+
+.pi-vis {
+    width: 100%; height: 100%;
+    position: absolute; inset: 0;
+    transition: transform .6s cubic-bezier(.23, 1, .32, 1);
+}
+
+.port-item:hover .pi-vis { transform: scale(1.04); }
+
+.pi-info {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(234, 224, 200, 0.94) 0%, rgba(234, 224, 200, 0.25) 60%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.8rem;
+    opacity: 0;
+    transition: opacity .4s;
+}
+
+.port-item:hover .pi-info { opacity: 1; }
+
+.pi-cat {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 0.4rem;
+}
+
+.pi-name { font-size: 1.2rem; font-weight: 700; color: var(--blue); margin-bottom: 1rem; }
+
+.pi-open-btn {
+    align-self: flex-start;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--blue);
+    color: var(--warm-ivory);
+    border: none;
+    padding: 0.5rem 1.2rem;
+    cursor: none;
+    border-radius: 2px;
+    transition: transform .2s;
+}
+
+.pi-open-btn:hover { transform: scale(1.05); }
+
+/* PDF button in modal */
+.modal-pdf-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.8rem;
+    padding: 0.8rem 2rem;
+    background: var(--blue);
+    color: var(--warm-ivory);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.modal-pdf-btn:hover { background: var(--neon); color: var(--warm-ivory); transform: translateY(-2px); }
+
+.modal-vis {
+    height: 320px;
+    position: relative;
+    overflow: hidden;
+    background: var(--surface2);
+}
+
+.modal-thumb-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+}
+
+.modal-thumb-svg { width: 100%; height: 320px; display: block; }
+
+.modal-pdf-badge {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: rgba(13, 59, 102, 0.88);
+    color: var(--warm-ivory);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 0.28rem 0.7rem;
+    border-radius: 2px;
+    text-transform: uppercase;
+}
+
+.pi-thumb {
+    width: 100%; height: 100%;
+    object-fit: fill;
+    object-position: top center;
+    position: absolute; inset: 0;
+    display: block;
+}
+
+.pi-pdf-tag {
+    position: absolute;
+    top: 0.8rem; left: 0.8rem;
+    background: rgba(13, 59, 102, 0.88);
+    color: var(--warm-ivory);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+    z-index: 5;
+    text-transform: uppercase;
+}
+
+/* ── TOOLS ── */
+#tools {
+    background: var(--pale-sage);
+    border-top: 1px solid var(--border);
+}
+
+.tools-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    margin-top: 4rem;
+    align-items: start;
+}
+
+.tools-doodle-area {
+    position: relative;
+    height: 420px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.tool-list { display: flex; flex-direction: column; gap: 0; }
+
+.tool-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.8rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: background .25s;
+}
+
+.tool-row:first-child { border-top: 1px solid var(--border); }
+
+.tool-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    width: 28px;
+    flex-shrink: 0;
+    padding-top: 3px;
+}
+
+.tool-icon-box {
+    width: 40px; height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    font-size: 1.2rem;
+}
+
+.tool-icon-box.b { background: var(--blue-dim); }
+.tool-icon-box.c { background: var(--coral-dim); }
+.tool-icon-box.s { background: var(--sage-dim); }
+.tool-icon-box.n { background: var(--neon-dim); }
+
+.tool-info { flex: 1; }
+.tool-name-t { font-size: 0.9rem; font-weight: 600; color: var(--blue); margin-bottom: 0.3rem; }
+.tool-desc-t { font-size: 0.78rem; line-height: 1.8; color: var(--grey); }
+
+/* ── GALLERY ── */
+#gallery {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+}
+
+.gal-intro {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--grey);
+    margin: 0.8rem 0 3rem;
+}
+
+.gal-grid {
+    columns: 3;
+    column-gap: 1px;
+    background: var(--border);
+    gap: 1px;
+}
+
+.gal-item {
+    break-inside: avoid;
+    margin-bottom: 1px;
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+}
+
+.gal-item svg,
+.gal-item .gal-vis {
+    width: 100%;
+    display: block;
+    transition: transform .5s cubic-bezier(.23, 1, .32, 1);
+}
+
+.gal-item:hover svg,
+.gal-item:hover .gal-vis { transform: scale(1.04); }
+
+.gal-hover {
+    position: absolute; inset: 0;
+    background: rgba(234, 224, 200, 0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.gal-item:hover .gal-hover { opacity: 1; }
+
+.gal-plus {
+    width: 44px; height: 44px;
+    border: 1px solid var(--blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: var(--blue);
+    transform: scale(0.7);
+    transition: transform .3s cubic-bezier(.23, 1, .32, 1);
+}
+
+.gal-item:hover .gal-plus { transform: scale(1); }
+
+/* ── CONTACT ── */
+#contact {
+    background: var(--soft-stone);
+    border-top: 1px solid var(--border);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+}
+
+.contact-big {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 1.5rem 0;
+    color: var(--blue);
+}
+
+.contact-big span { color: var(--coral); }
+
+.contact-sub {
+    font-size: 0.85rem;
+    line-height: 2;
+    color: var(--grey);
+    margin-bottom: 2rem;
+}
+
+.social-row { display: flex; flex-direction: column; gap: 0.7rem; }
+
+.soc-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--grey);
+    text-decoration: none;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: all .25s;
+}
+
+.soc-link:hover { color: var(--blue); padding-left: 0.5rem; }
+.soc-link .soc-icon { font-size: 1rem; width: 22px; }
+.soc-arrow { margin-left: auto; opacity: 0; transition: opacity .25s; }
+.soc-link:hover .soc-arrow { opacity: 1; }
+
+/* ── FOOTER ── */
+footer {
+    background: var(--blue);
+    border-top: 1px solid var(--border);
+    padding: 1.8rem 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 5;
+    position: relative;
+}
+
+.ft-left {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(234, 224, 200, 0.6);
+    letter-spacing: 0.08em;
+}
+
+.ft-right { font-size: 0.72rem; color: rgba(234, 224, 200, 0.6); }
+.ft-right span { color: var(--mustard); }
+
+/* ── MODAL ── */
+.modal-bg {
+    position: fixed; inset: 0;
+    z-index: 500;
+    background: rgba(234, 224, 200, 0.88);
+    backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .4s;
+}
+
+.modal-bg.open { opacity: 1; pointer-events: all; }
+
+.modal-box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    max-width: 700px;
+    width: 90vw;
+    max-height: 88vh;
+    overflow-y: auto;
+    transform: translateY(30px) scale(.97);
+    transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+    position: relative;
+    box-shadow: 0 20px 60px rgba(13, 59, 102, 0.12);
+}
+
+.modal-bg.open .modal-box { transform: translateY(0) scale(1); }
+
+.modal-body { padding: 2.5rem; }
+
+.modal-cat-m {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 0.5rem;
+}
+
+.modal-title-m { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; color: var(--blue); }
+.modal-desc-m { font-size: 0.85rem; line-height: 2; color: var(--white-dim); }
+
+.modal-close-btn {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    width: 36px; height: 36px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    cursor: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: var(--grey);
+    z-index: 10;
+    transition: all .2s;
+}
+
+.modal-close-btn:hover { background: var(--coral); color: var(--warm-ivory); border-color: var(--coral); }
+
+.modal-link-btn {
+    display: none;
+    margin-top: 1.8rem;
+    padding: 0.75rem 1.8rem;
+    background: var(--blue);
+    color: var(--warm-ivory);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.3s, transform 0.2s;
+    font-weight: 700;
+}
+
+.modal-link-btn:hover { background: var(--neon); transform: translateY(-2px); }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .9s ease, transform .9s cubic-bezier(.23, 1, .32, 1);
+}
+
+.reveal.vis { opacity: 1; transform: translateY(0); }
+.rd1 { transition-delay: .1s; }
+.rd2 { transition-delay: .2s; }
+.rd3 { transition-delay: .3s; }
+.rd4 { transition-delay: .4s; }
+
+.tool-icon-box{
+    width:50px;
+    height:50px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    background:#E5E2D0;
+    color:#6F8596;
+    border:1px solid rgba(111,133,150,.18);
+    transition:.4s ease;
+}
+
+.tool-icon-box svg{
+    width:34px;
+    height:34px;
+}
+
+.tool-row:hover .tool-icon-box{
+    transform:translateY(-6px);
+    background:#CED8E4;
+    color:#0D3B66;
+    box-shadow:0 12px 25px rgba(13,59,102,.12);
+}
+
+.soc-icon{
+    width:26px;
+    height:26px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#6F8596;
+    transition:.35s ease;
+}
+
+.soc-icon svg{
+    width:22px;
+    height:22px;
+    stroke:currentColor;
+}
+
+.soc-link:hover .soc-icon{
+    color:#0D3B66;
+    transform:translateY(-3px) scale(1.08);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+    .about-grid, .tools-layout, .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    .port-grid { grid-template-columns: 1fr 1fr; }
+    .gal-grid { columns: 2; }
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .sec-wrap { padding: 5rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    #hero { padding: 0 1.5rem 4rem; }
+    .hero-top-badge { right: 1.5rem; }
+}
+
+@media (max-width: 560px) {
+    .port-grid { grid-template-columns: 1fr; }
+    .gal-grid { columns: 1; }
+    .hero-desc-row { flex-direction: column; align-items: flex-start; gap: 2rem; }
+}
+ /* ══════════════════════════════════════════════════
+           HIGHLIGHT TAGS - clickable, each unique color
+           Click → scrolls to their section
+           Achievements → opens certificate modal
+        ══════════════════════════════════════════════════ */
+        .highlight-tags {
+              display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+        }
+ 
+        .h-tag {
+            display: inline-flex;
+                gap: 0.5rem;
+            align-items: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 450;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid;
+            cursor: none;
+            transition: all 0.3s cubic-bezier(.23,1,.32,1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+        .h-tag::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: currentColor;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+        .h-tag:hover::before { opacity: 0.08; }
+        .h-tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+        .h-tag .h-icon { font-size: 0.85rem; }
+        .h-tag .h-arrow {
+            font-size: 0.7rem;
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: all 0.25s;
+        }
+        .h-tag:hover .h-arrow { opacity: 1; transform: translateX(0); }
+ 
+        /* Color 1 - Knitwear Design: Deep Navy */
+        .ht-navy {
+            color: #0D3B66;
+            background: rgba(13,59,102,0.08);
+            border-color: rgba(13,59,102,0.35);
+        }
+        .ht-navy:hover { background: rgba(13,59,102,0.14); border-color: #0D3B66; }
+ 
+        /* Color 2 - Fashion Illustration: Dusty Blue */
+        .ht-dusty {
+            color: #6F8596;
+            background: rgba(111,133,150,0.08);
+            border-color: rgba(111,133,150,0.35);
+        }
+        .ht-dusty:hover { background: rgba(111,133,150,0.15); border-color: #6F8596; }
+ 
+        /* Color 3 - Photography: Olive Teal */
+        .ht-teal {
+            color: #5D7A78;
+            background: rgba(93,122,120,0.08);
+            border-color: rgba(93,122,120,0.35);
+        }
+        .ht-teal:hover { background: rgba(93,122,120,0.15); border-color: #5D7A78; }
+ 
+        /* Color 4 - Moodboards: Muted Sage */
+        .ht-sage {
+            color: #6D7C75;
+            background: rgba(109,124,117,0.08);
+            border-color: rgba(109,124,117,0.35);
+        }
+        .ht-sage:hover { background: rgba(109,124,117,0.15); border-color: #6D7C75; }
+ 
+        /* Color 5  Pattern Making: Soft Gold */
+        .ht-gold {
+            color: #9E7320;
+            background: rgba(208,158,87,0.1);
+            border-color: rgba(208,158,87,0.4);
+        }
+        .ht-gold:hover { background: rgba(208,158,87,0.18); border-color: #D09E57; }
+ 
+        /* Color 6 - Achievements: Steel Blue (special - glows) */
+        .ht-steel {
+            color: #708090;
+            background: rgba(112,128,144,0.08);
+            border-color: rgba(112,128,144,0.35);
+        }
+        .ht-steel:hover {
+            background: rgba(112,128,144,0.14);
+            border-color: #708090;
+            box-shadow: 0 6px 24px rgba(112,128,144,0.25);
+        }
+ 
+        /* ── Scroll hint tooltip on hover ── */
+        .h-tag[data-section]:not(.ht-steel)::after {
+            content: attr(data-hint);
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%) translateY(4px);
+            background: #0D3B66;
+            color: #fff;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 0.08em;
+            padding: 0.3rem 0.7rem;
+            border-radius: 3px;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            z-index: 10;
+        }
+        .h-tag[data-section]:not(.ht-steel):hover::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+ 
+        /* ══════════════════════════════════════════════════
+           CERTIFICATE MODAL
+           Same structure as project modal (.modal-box)
+           but with image grid inside instead of gradient
+        ══════════════════════════════════════════════════ */
+        #certModalBg {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            background: rgba(229,226,208,0.6);
+            backdrop-filter: blur(14px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        #certModalBg.open { opacity: 1; pointer-events: all; }
+ 
+        .cert-modal {
+            background: #fff;
+            border: 1px solid rgba(111,133,150,0.2);
+            border-radius: 6px;
+            max-width: 820px;
+            width: 92vw;
+            max-height: 88vh;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            transform: translateY(30px) scale(0.97);
+            transition: transform 0.4s cubic-bezier(.23,1,.32,1);
+            position: relative;
+            box-shadow: 0 24px 80px rgba(13,59,102,0.12);
+        }
+        #certModalBg.open .cert-modal { transform: translateY(0) scale(1); }
+
+        .cert-modal::-webkit-scrollbar { width: 7px; }
+        .cert-modal::-webkit-scrollbar-track { background: transparent; }
+        .cert-modal::-webkit-scrollbar-thumb {
+            background: rgba(13,59,102,0.25);
+            border-radius: 10px;
+        }
+        .cert-modal::-webkit-scrollbar-thumb:hover { background: rgba(13,59,102,0.45); }
+ 
+        /* Header band */
+        .cert-modal-head {
+            padding: 2rem 2.5rem 1.5rem;
+            border-bottom: 1px solid rgba(111,133,150,0.15);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            background: linear-gradient(135deg, #EAE0C8 0%, #E5E2D0 100%);
+        }
+        .cert-modal-head-left {}
+        .cert-modal-eyebrow {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: #708090;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .cert-modal-eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 16px; height: 1px;
+            background: #708090;
+        }
+        .cert-modal-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.9rem;
+            font-style: italic;
+            font-weight: 400;
+            color: #0D3B66;
+            line-height: 1.15;
+        }
+        .cert-modal-close {
+            width: 36px; height: 36px;
+            background: rgba(112,128,144,0.1);
+            border: 1px solid rgba(112,128,144,0.25);
+            border-radius: 50%;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #6F8596;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+        .cert-modal-close:hover {
+            background: #0D3B66;
+            color: #fff;
+            border-color: #0D3B66;
+        }
+ 
+        /* Certificate image grid */
+        .cert-modal-body { padding: 2rem 2.5rem 2.5rem; }
+        .cert-intro {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1rem;
+            font-style: italic;
+            color: #6F8596;
+            margin-bottom: 1.8rem;
+            line-height: 1.7;
+        }
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+ 
+        /* Single certificate card */
+        .cert-card {
+            border: 1px solid rgba(111,133,150,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            background: #F5F3EC;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: none;
+        }
+        .cert-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(13,59,102,0.1);
+        }
+ 
+        /* Certificate image slot */
+        .cert-img-wrap {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            background: #EAE0C8;
+        }
+        .cert-img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            object-position: center top;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .cert-card:hover .cert-img { transform: scale(1.04); }
+ 
+        /* Placeholder shown when no image */
+        .cert-img-placeholder {
+            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            background: linear-gradient(135deg, #CED8E4 0%, #BFCAB5 100%);
+        }
+        .cert-img-placeholder .cert-ph-icon { font-size: 2rem; opacity: 0.5; }
+        .cert-img-placeholder .cert-ph-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #708090;
+        }
+ 
+        /* Certificate info below image */
+        .cert-info { padding: 1rem 1.1rem 1.1rem; }
+        .cert-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #0D3B66;
+            margin-bottom: 0.25rem;
+        }
+        .cert-issuer {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            color: #708090;
+            text-transform: uppercase;
+        }
+        .cert-year {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.58rem;
+            color: #9FADB6;
+            margin-top: 0.2rem;
+        }
+ 
+        /* ══════════════════════════════════════════════════
+           Existing modal styles kept (project / gallery modal)
+        ══════════════════════════════════════════════════ */
+        .modal-pdf-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.8rem;
+            padding: 0.8rem 2rem;
+            background: #0D3B66;
+            color: #fff;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            border-radius: 2px;
+            border: none;
+            cursor: none;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .modal-pdf-btn:hover { background: #D09E57; transform: translateY(-2px); }
+ 
+        #pdfViewerOverlay {
+            position: fixed; inset: 0; z-index: 600;
+            background: rgba(229,226,208,0.97);
+            display: flex; flex-direction: column;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+        #pdfViewerOverlay.open { opacity: 1; pointer-events: all; }
+        .pdf-viewer-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.85rem 1.8rem; flex-shrink: 0;
+            background: #EAE0C8;
+            border-bottom: 1px solid rgba(111,133,150,0.2);
+        }
+        .pdf-viewer-left { display: flex; flex-direction: column; gap: 0.2rem; }
+        .pdf-viewer-title {
+            font-family: 'Space Mono', monospace; font-size: 0.7rem;
+            letter-spacing: 0.15em; text-transform: uppercase; color: #0D3B66;
+        }
+        .pdf-viewer-notice {
+            font-family: 'Space Mono', monospace; font-size: 0.56rem;
+            letter-spacing: 0.08em; color: #708090;
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+        .pdf-viewer-notice::before {
+            content: ''; display: inline-block;
+            width: 5px; height: 5px; border-radius: 50%;
+            background: #5D7A78; flex-shrink: 0;
+        }
+        .pdf-viewer-close {
+            font-family: 'Space Mono', monospace; font-size: 0.65rem;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            background: none; border: 1px solid rgba(112,128,144,0.35);
+            color: #708090; padding: 0.45rem 1.1rem; border-radius: 2px;
+            cursor: none; transition: all 0.2s;
+        }
+        .pdf-viewer-close:hover { border-color: #0D3B66; color: #0D3B66; }
+        .pdf-iframe-wrap { flex: 1; position: relative; overflow: hidden; }
+        .pdf-iframe-guard { position: absolute; inset: 0; z-index: 2; background: transparent; }
+        #pdfFrame { width: 100%; height: 100%; border: none; display: block; }
+ 
+        .modal-vis {
+            height: 320px; position: relative; overflow: hidden;
+            background: #CED8E4;
+        }
+        .modal-thumb-img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: top center; display: block;
+        }
+        .modal-thumb-svg { width: 100%; height: 320px; display: block; }
+        .modal-pdf-badge {
+            position: absolute; top: 1rem; right: 1rem;
+            background: #0D3B66; color: #fff;
+            font-family: 'Space Mono', monospace; font-size: 0.58rem;
+            font-weight: 700; letter-spacing: 0.12em;
+            padding: 0.28rem 0.7rem; border-radius: 2px; text-transform: uppercase;
+        }
+        .pi-thumb {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: top center;
+            position: absolute; inset: 0; display: block;
+        }
+        .pi-pdf-tag {
+            position: absolute; top: 0.8rem; left: 0.8rem;
+            background: rgba(13,59,102,0.85); color: #fff;
+            font-family: 'Space Mono', monospace; font-size: 0.55rem;
+            font-weight: 700; letter-spacing: 0.1em;
+            padding: 0.25rem 0.6rem; border-radius: 2px; z-index: 5;
+            text-transform: uppercase;
+        }
+        section, #hero {
+    scroll-margin-top: 90px;   /* add this line to your existing section rule */
+}
+
+.pdf-iframe-guard {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: transparent;
+}
+
+.pdf-iframe-guard {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: transparent;
+    pointer-events: none;   /* ← add this */
+}
+    </style>
+</head>
+<body>
+ 
+    <div class="grain"></div>
+    <canvas id="bgCanvas"></canvas>
+    <div id="cur"></div>
+    <div id="cur2"></div>
+ 
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="nav-logo"><div class="nav-logo-dot"></div>Dhruv Kumar Dawre</a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#tools">Process</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-badge">NIFT · SEM 5</div>
+    </nav>
+ 
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hero-bg-num">04</div>
+        <div class="hero-top-badge">Knitwear Design ✦</div>
+        <div class="float-doodle" style="top:18%;left:6%;animation-delay:0s;">
+            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                <circle cx="30" cy="30" r="22" stroke="rgba(13,59,102,0.25)" stroke-width="1.5" fill="rgba(13,59,102,0.04)"/>
+                <path d="M12 22 Q30 18 48 22" stroke="rgba(13,59,102,0.2)" stroke-width="1" fill="none"/>
+                <path d="M10 30 Q30 26 50 30" stroke="rgba(13,59,102,0.2)" stroke-width="1" fill="none"/>
+                <path d="M12 38 Q30 34 48 38" stroke="rgba(13,59,102,0.2)" stroke-width="1" fill="none"/>
+                <path d="M22 10 Q26 30 22 50" stroke="rgba(13,59,102,0.15)" stroke-width="1" fill="none"/>
+                <path d="M38 10 Q34 30 38 50" stroke="rgba(13,59,102,0.15)" stroke-width="1" fill="none"/>
+            </svg>
+        </div>
+        <div class="float-doodle" style="top:30%;right:6%;animation-delay:2s;">
+            <svg width="50" height="80" viewBox="0 0 50 80" fill="none">
+                <line x1="5" y1="5" x2="45" y2="75" stroke="rgba(208,158,87,0.5)" stroke-width="2" stroke-linecap="round"/>
+                <line x1="45" y1="5" x2="5" y2="75" stroke="rgba(208,158,87,0.5)" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="5" cy="5" r="4" fill="rgba(208,158,87,0.5)"/>
+                <circle cx="45" cy="5" r="4" fill="rgba(208,158,87,0.5)"/>
+                <circle cx="15" cy="21" r="3" stroke="rgba(208,158,87,0.35)" stroke-width="1" fill="none"/>
+                <circle cx="25" cy="40" r="3" stroke="rgba(208,158,87,0.35)" stroke-width="1" fill="none"/>
+                <circle cx="35" cy="59" r="3" stroke="rgba(208,158,87,0.35)" stroke-width="1" fill="none"/>
+            </svg>
+        </div>
+        <div class="float-doodle" style="bottom:25%;left:12%;animation-delay:1.2s;">
+            <svg width="55" height="40" viewBox="0 0 55 40" fill="none">
+                <path d="M5 20 Q10 8 15 20 Q20 32 25 20 Q30 8 35 20 Q40 32 45 20 Q50 8 55 20" stroke="rgba(93,122,120,0.45)" stroke-width="1.5" fill="none"/>
+                <path d="M5 28 Q10 16 15 28 Q20 40 25 28 Q30 16 35 28 Q40 40 45 28 Q50 16 55 28" stroke="rgba(93,122,120,0.3)" stroke-width="1" fill="none"/>
+                <path d="M5 12 Q10 0 15 12 Q20 24 25 12 Q30 0 35 12 Q40 24 45 12 Q50 0 55 12" stroke="rgba(93,122,120,0.3)" stroke-width="1" fill="none"/>
+            </svg>
+        </div>
+        <div class="float-doodle" style="bottom:35%;right:12%;animation-delay:3s;">
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+                <rect x="2" y="2" width="40" height="40" stroke="rgba(159,183,201,0.5)" stroke-width="1.5" fill="none"/>
+                <line x1="2" y1="10" x2="42" y2="10" stroke="rgba(159,183,201,0.3)" stroke-width="1"/>
+                <line x1="2" y1="18" x2="42" y2="18" stroke="rgba(159,183,201,0.3)" stroke-width="1"/>
+                <line x1="2" y1="26" x2="42" y2="26" stroke="rgba(159,183,201,0.3)" stroke-width="1"/>
+                <line x1="2" y1="34" x2="42" y2="34" stroke="rgba(159,183,201,0.3)" stroke-width="1"/>
+                <line x1="10" y1="2" x2="10" y2="42" stroke="rgba(159,183,201,0.3)" stroke-width="1"/>
+                <line x1="18" y1="2" x2="18" y2="42" stroke="rgba(159,183,201,0.3)" stroke-width="1"/>
+                <line x1="26" y1="2" x2="26" y2="42" stroke="rgba(159,183,201,0.3)" stroke-width="1"/>
+                <line x1="34" y1="2" x2="34" y2="42" stroke="rgba(159,183,201,0.3)" stroke-width="1"/>
+            </svg>
+        </div>
+        <div class="tape-h" style="width:80px;height:22px;top:22%;left:25%;transform:rotate(-35deg);"></div>
+        <div class="tape-h" style="width:65px;height:18px;bottom:32%;right:22%;transform:rotate(20deg);background:rgba(208,158,87,0.18);"></div>
+        <div class="hero-semester">NIFT Bhopal · 3rd Year · Semester 5</div>
+        <h1 class="hero-name"><span class="line1">Dhruv kumar</span><span class="line2">Dawre</span></h1>
+        <div class="hero-desc-row">
+            <p class="hero-desc">Knitwear designer & graphic artist. Building collections stitch by stitch, and visual identities pixel by pixel.</p>
+            <a href="#portfolio" class="hero-cta">View Work →</a>
+        </div>
+        <div class="hero-scroll"><div class="hero-scroll-line"></div><span>Scroll</span></div>
+    </section>
+ 
+    <!-- MARQUEE -->
+    <div class="marquee-band">
+        <div class="marquee-track">
+            <span class="marquee-item accent">Knitwear Design</span><span class="marquee-item">✦</span>
+            <span class="marquee-item accent2">Fashion Illustration</span><span class="marquee-item">✦</span>
+            <span class="marquee-item">Photography</span><span class="marquee-item">✦</span>
+            <span class="marquee-item accent3">NIFT Bhopal</span><span class="marquee-item">✦</span>
+            <span class="marquee-item">Pattern Making</span><span class="marquee-item">✦</span>
+            <span class="marquee-item accent">Moodboards</span><span class="marquee-item">✦</span>
+            <span class="marquee-item">Garment Construction</span><span class="marquee-item">✦</span>
+            <span class="marquee-item accent2">Knitwear Design</span><span class="marquee-item">✦</span>
+            <span class="marquee-item">Fashion Illustration</span><span class="marquee-item">✦</span>
+            <span class="marquee-item accent">Photography</span><span class="marquee-item">✦</span>
+            <span class="marquee-item accent3">NIFT Bhopal</span><span class="marquee-item">✦</span>
+            <span class="marquee-item">Pattern Making</span><span class="marquee-item">✦</span>
+            <span class="marquee-item">Moodboards</span><span class="marquee-item">✦</span>
+            <span class="marquee-item accent2">Garment Construction</span><span class="marquee-item">✦</span>
+        </div>
+    </div>
+ 
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="sec-wrap">
+            <div class="about-grid">
+                <div class="profile-card-wrap reveal">
+                    <div class="profile-tape-1"></div>
+                    <div class="profile-tape-2"></div>
+                    <div class="profile-photo img-slot" id="profilePhotoSlot">
+                        <img src="Dhruv Kumar Dawre_3rd Year-5th sem_Nift Bhopal.jpeg" alt="Dhruv Kumar Dawre" onerror="this.style.display='none'">
+                        <div class="profile-photo-name">Dhruv Kumar Dawre - NIFT Bhopal</div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-box"><div class="stat-num">05<span>.</span></div><div class="stat-lbl">Semester</div></div>
+                        <div class="stat-box"><div class="stat-num">03<span>.</span></div><div class="stat-lbl">Year</div></div>
+                    </div>
+                </div>
+ 
+                <div class="about-text">
+                    <div class="sec-label reveal">About Me</div>
+                    <h2 class="sec-title reveal rd1">Building a language<br>in <em>stitch & pixel</em></h2>
+                    <p class="about-intro reveal rd2">"Design isn't just what it looks like - it's the story you tell before the person even touches the fabric."</p>
+                    <p class="about-body reveal rd3">Hey, I'm Dhruv - a 21-year-old knitwear designer and graphic artist currently in my 4th semester at NIFT, Bhopal. My work lives at the crossing point of tactile craft and digital aesthetics.</p>
+                    <p class="about-body reveal rd3">I'm obsessed with the architecture of knitwear - how a stitch structure can make a garment feel heavy or weightless, structured or fluid. That same thinking drives my graphic work: every layout, typeface choice, and colour decision is load-bearing.</p>
+                    <p class="about-body reveal rd4">Currently exploring oversized silhouettes, tonal colour-block knits, and editorial graphic systems that blur the line between fashion and visual art.</p>
+ 
+                    <!-- ══════════════════════════════════════════════
+                         HIGHLIGHT TAGS
+                         Each tag has a unique color and action:
+                         - Knitwear Design      → scroll to #portfolio
+                         - Fashion Illustration → scroll to #portfolio
+                         - Photography          → scroll to #gallery
+                         - Moodboards           → scroll to #gallery
+                         - Pattern Making       → scroll to #portfolio
+                         - Achievements         → opens certificate modal
+                    ══════════════════════════════════════════════ -->
+                    <div class="highlight-tags reveal rd4">
+ 
+                        <!-- 1. Knitwear Design → Portfolio -->
+                        <button class="h-tag ht-navy"
+                            onclick="scrollToSection('#portfolio')"
+                            data-section="portfolio"
+                            data-hint="↓ View Portfolio">
+                            <span class="h-icon"></span>
+                            Knitwear Design
+                            <span class="h-arrow">→</span>
+                        </button>
+ 
+                        <!-- 2. Fashion Illustration → Portfolio -->
+                        <button class="h-tag ht-dusty"
+                            onclick="scrollToSection('#portfolio')"
+                            data-section="portfolio"
+                            data-hint="↓ View Portfolio">
+                            <span class="h-icon"></span>
+                            Fashion Illustration
+                            <span class="h-arrow">→</span>
+                        </button>
+ 
+                        <!-- 3. Photography → Gallery / Lookbook -->
+                        <button class="h-tag ht-teal"
+                            onclick="scrollToSection('#gallery')"
+                            data-section="gallery"
+                            data-hint="↓ View Lookbook">
+                            <span class="h-icon"></span>
+                            Photography
+                            <span class="h-arrow">→</span>
+                        </button>
+ 
+                        <!-- 4. Moodboards → Gallery -->
+                        <button class="h-tag ht-sage"
+                            onclick="scrollToSection('#gallery')"
+                            data-section="gallery"
+                            data-hint="↓ View Lookbook">
+                            <span class="h-icon"></span>
+                            Moodboards
+                            <span class="h-arrow">→</span>
+                        </button>
+ 
+                        <!-- 5. Pattern Making & Garment Construction → Portfolio -->
+                        <button class="h-tag ht-gold"
+                            onclick="scrollToSection('#portfolio')"
+                            data-section="portfolio"
+                            data-hint="↓ View Portfolio">
+                            <span class="h-icon"></span>
+                            Pattern Making & Garment Construction
+                            <span class="h-arrow">→</span>
+                        </button>
+ 
+                        <!-- 6. Achievements & Certificates → Certificate Modal -->
+                        <button class="h-tag ht-steel"
+                            onclick="openCertModal()">
+                            <span class="h-icon"></span>
+                            Achievements & Certificates
+                            <span class="h-arrow">↗</span>
+                        </button>
+ 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- PORTFOLIO -->
+    <section id="portfolio">
+        <div class="sec-wrap">
+            <div class="sec-label reveal">Selected Works</div>
+            <h2 class="sec-title reveal rd1">The <em>Portfolio</em></h2>
+            <div class="port-filter reveal rd2" id="portFilter">
+                <button class="pf-btn active" onclick="filterPort('all',this)">All</button>
+                <button class="pf-btn" onclick="filterPort('knitwear',this)">DS Sport Knitwear</button>
+                <button class="pf-btn" onclick="filterPort('fashion-illustration',this)">Fashion Illustration</button>
+                <button class="pf-btn" onclick="filterPort('pmgc',this)">PMGC</button>
+                <button class="pf-btn" onclick="filterPort('more',this)">More</button>
+            </div>
+            <div class="port-grid" id="portGrid"></div>
+        </div>
+    </section>
+ 
+    <!-- TOOLS & PROCESS -->
+    <section id="tools">
+        <div class="sec-wrap">
+            <div class="sec-label reveal">Creative Process</div>
+            <h2 class="sec-title reveal rd1">Tools &amp; <em>Workflow</em></h2>
+            <div class="tools-layout">
+                <div class="tools-doodle-area reveal">
+                    <svg width="100%" height="420" viewBox="0 0 440 420" xmlns="http://www.w3.org/2000/svg">
+                        <defs><pattern id="toolGrid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0L0 0 0 20" fill="none" stroke="rgba(13,59,102,0.06)" stroke-width="0.5"/></pattern></defs>
+                        <rect width="440" height="420" fill="url(#toolGrid)"/>
+                        <circle cx="120" cy="140" r="75" fill="rgba(13,59,102,0.05)" stroke="rgba(13,59,102,0.18)" stroke-width="1.5"/>
+                        <path d="M55 115 Q120 100 185 115" stroke="rgba(13,59,102,0.18)" stroke-width="1" fill="none"/>
+                        <path d="M48 130 Q120 115 192 130" stroke="rgba(13,59,102,0.18)" stroke-width="1" fill="none"/>
+                        <path d="M46 145 Q120 130 194 145" stroke="rgba(13,59,102,0.18)" stroke-width="1" fill="none"/>
+                        <path d="M48 160 Q120 145 192 160" stroke="rgba(13,59,102,0.18)" stroke-width="1" fill="none"/>
+                        <path d="M55 175 Q120 160 185 175" stroke="rgba(13,59,102,0.18)" stroke-width="1" fill="none"/>
+                        <path d="M95 70 Q108 140 95 210" stroke="rgba(13,59,102,0.12)" stroke-width="1" fill="none"/>
+                        <path d="M120 65 Q120 140 120 215" stroke="rgba(13,59,102,0.12)" stroke-width="1" fill="none"/>
+                        <path d="M145 70 Q132 140 145 210" stroke="rgba(13,59,102,0.12)" stroke-width="1" fill="none"/>
+                        <path d="M185 140 Q210 135 225 120 Q238 108 250 115 Q262 122 255 135" stroke="rgba(13,59,102,0.25)" stroke-width="1.5" fill="none"/>
+                        <text x="90" y="240" font-family="monospace" font-size="9" fill="rgba(13,59,102,0.35)" text-anchor="middle">MERINO WOOL</text>
+                        <line x1="260" y1="30" x2="380" y2="180" stroke="rgba(208,158,87,0.5)" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="260" cy="30" r="8" fill="rgba(208,158,87,0.5)"/>
+                        <line x1="290" y1="30" x2="410" y2="180" stroke="rgba(208,158,87,0.5)" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="290" cy="30" r="8" fill="rgba(208,158,87,0.5)"/>
+                        <ellipse cx="285" cy="65" rx="10" ry="6" stroke="rgba(208,158,87,0.3)" stroke-width="1" fill="none" transform="rotate(48,285,65)"/>
+                        <ellipse cx="300" cy="85" rx="10" ry="6" stroke="rgba(208,158,87,0.3)" stroke-width="1" fill="none" transform="rotate(48,300,85)"/>
+                        <ellipse cx="315" cy="105" rx="10" ry="6" stroke="rgba(208,158,87,0.3)" stroke-width="1" fill="none" transform="rotate(48,315,105)"/>
+                        <text x="390" y="120" font-family="monospace" font-size="9" fill="rgba(208,158,87,0.5)">NEEDLES</text>
+                        <rect x="60" y="280" width="130" height="110" fill="rgba(93,122,120,0.07)" stroke="rgba(93,122,120,0.3)" stroke-width="1"/>
+                        <path d="M70 295 Q80 285 90 295 Q100 305 110 295 Q120 285 130 295 Q140 305 150 295 Q160 285 170 295 Q180 305 182 295" stroke="rgba(93,122,120,0.3)" stroke-width="1" fill="none"/>
+                        <path d="M70 315 Q80 305 90 315 Q100 325 110 315 Q120 305 130 315 Q140 325 150 315 Q160 305 170 315 Q180 325 182 315" stroke="rgba(93,122,120,0.3)" stroke-width="1" fill="none"/>
+                        <path d="M70 335 Q80 325 90 335 Q100 345 110 335 Q120 325 130 335 Q140 345 150 335 Q160 325 170 335 Q180 345 182 335" stroke="rgba(93,122,120,0.3)" stroke-width="1" fill="none"/>
+                        <text x="125" y="400" font-family="monospace" font-size="9" fill="rgba(93,122,120,0.4)" text-anchor="middle">SWATCH 03</text>
+                        <rect x="240" y="250" width="150" height="110" rx="5" fill="rgba(159,183,201,0.07)" stroke="rgba(159,183,201,0.35)" stroke-width="1"/>
+                        <rect x="248" y="258" width="134" height="90" rx="2" fill="rgba(159,183,201,0.05)"/>
+                        <path d="M255 295 Q270 275 285 285 Q295 292 305 278 Q315 265 330 272 Q345 280 370 268" stroke="rgba(13,59,102,0.3)" stroke-width="1" fill="none"/>
+                        <circle cx="285" cy="285" r="3" fill="rgba(13,59,102,0.4)"/>
+                        <text x="315" y="372" font-family="monospace" font-size="9" fill="rgba(93,122,120,0.4)" text-anchor="middle">PROCREATE</text>
+                    </svg>
+                    <div style="position:absolute;width:65px;height:18px;background:rgba(13,59,102,0.1);top:-7px;left:50px;transform:rotate(-3deg);border-radius:2px;"></div>
+                    <div style="position:absolute;width:55px;height:16px;background:rgba(208,158,87,0.15);bottom:30px;right:25px;transform:rotate(6deg);border-radius:2px;"></div>
+                </div>
+                <div class="tool-list reveal rd1">
+                    <div class="tool-row"><div class="tool-num">01</div><div class="tool-icon-box b">🧶</div><div class="tool-info"><div class="tool-name-t">Garment Construction</div><div class="tool-desc-t">Merino, mohair, cotton blends - sourced and swatched before any needle touches the machine. Weight, drape, and handle inform every design decision.</div></div></div>
+                    <div class="tool-row"><div class="tool-num">02</div><div class="tool-icon-box c">✏️</div><div class="tool-info"><div class="tool-name-t">Material Handling</div><div class="tool-desc-t">Copic markers, fine liners, layout paper. Every collection concept lives on paper first - loose croquis, detail studies, drape experiments.</div></div></div>
+                    <div class="tool-row"><div class="tool-num">03</div><div class="tool-icon-box n">💻</div><div class="tool-info"><div class="tool-name-t">Illustration</div><div class="tool-desc-t">Adobe Illustrator for flat sketches & tech packs, Photoshop for mood collages, and Procreate on iPad for expressive editorial illustration.</div></div></div>
+                    <div class="tool-row"><div class="tool-num">04</div><div class="tool-icon-box s">📌</div><div class="tool-info"><div class="tool-name-t">Moodboarding</div><div class="tool-desc-t">Physical boards with fabric swatches, torn references, washi tape, and colour chips - always the anchor before a collection moves to samples.</div></div></div>
+                    <div class="tool-row"><div class="tool-num">05</div><div class="tool-icon-box b">🔢</div><div class="tool-info"><div class="tool-name-t">Design Process</div><div class="tool-desc-t">Hand-drafted stitch charts on graph paper, then digitalised. Cable structures, intarsia motifs, and texture patterns all begin on the grid.</div></div></div>
+                    <div class="tool-row"><div class="tool-num">06</div><div class="tool-icon-box b">📸</div><div class="tool-info"><div class="tool-name-t">Fashion Photography</div><div class="tool-desc-t">Hand-drafted stitch charts on graph paper, then digitalised. Cable structures, intarsia motifs, and texture patterns all begin on the grid.</div></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- GALLERY / LOOKBOOK -->
+    <section id="gallery">
+        <div class="sec-wrap">
+            <div class="sec-label reveal">Visual Archive</div>
+            <h2 class="sec-title reveal rd1">Lookbook & <em>Experiments</em></h2>
+            <p class="gal-intro reveal rd2">"A studio wall in digital form - swatches, sketches, and experiments."</p>
+            <div class="gal-grid" id="galGrid"></div>
+        </div>
+    </section>
+ 
+   <!-- CONTACT -->
+    <section id="contact">
+        <div class="sec-wrap">
+            <div class="contact-grid">
+                <div>
+                    <div class="sec-label reveal">Get In Touch</div>
+                    <h2 class="contact-big reveal rd1">Let's build<br>something <span>new.</span></h2>
+                    <p class="contact-sub reveal rd2">Open for collabs, editorial projects, brand identities, and
+                        knitwear commissions. Always interested in meeting other creatives.</p>
+                    <div class="social-row reveal rd3">
+                        <a href="#" class="soc-link"><span class="soc-icon"><svg width="24" height="24" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="14" y="14" width="36" height="36" rx="10"/>
+    <circle cx="32" cy="32" r="10"/>
+    <circle cx="44" cy="20" r="2"/>
+</svg></span> @dhruv.knitwear<span
+                                class="soc-arrow">↗</span></a>
+                        <a href="#" class="soc-link"><span class="soc-icon"><svg width="24" height="24" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 20H34C40 20 44 23 44 28C44 33 40 36 34 36H18Z"/>
+    <path d="M18 36H36C42 36 46 39 46 44C46 49 42 52 36 52H18Z"/>
+    <path d="M48 20H56"/>
+</svg></span> behance.net/dhruvdawre<span
+                                class="soc-arrow">↗</span></a>
+                        <a href="#" class="soc-link"><span class="soc-icon"><svg width="24" height="24" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="14" y="14" width="36" height="36" rx="6"/>
+    <circle cx="24" cy="26" r="2"/>
+    <path d="M24 32V46"/>
+    <path d="M34 46V34C34 31 36 29 39 29C42 29 44 31 44 34V46"/>
+    <path d="M34 34V46"/>
+</svg></span> linkedin.com/in/dhruvdawre<span
+                                class="soc-arrow">↗</span></a>
+                        <a href="#" class="soc-link"><span class="soc-icon"><svg width="24" height="24" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="12" y="18" width="40" height="28" rx="4"/>
+    <path d="M12 22L32 36L52 22"/>
+</svg></span> dhruv@studio.co<span
+                                class="soc-arrow">↗</span></a>
+                    </div>
+                </div>
+                <div class="about-visual reveal">
+                    <div class="croquis-card">
+                        <svg width="100%" height="100%" viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#1a1c17" />
+                                    <stop offset="100%" stop-color="#21231d" />
+                                </linearGradient>
+                                <pattern id="knitPat" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+                                    <path d="M0 6 Q3 0 6 6 Q9 12 12 6" stroke="rgba(31,111,176,0.1)" stroke-width="0.8"
+                                        fill="none" />
+                                </pattern>
+                            </defs>
+                            <rect width="400" height="480" fill="url(#bgGrad)" />
+                            <rect width="400" height="480" fill="url(#knitPat)" />
+                            <ellipse cx="200" cy="62" rx="26" ry="30" fill="#c8a888" stroke="#a08060"
+                                stroke-width="0.8" />
+                            <path
+                                d="M174 52 Q176 34 200 32 Q224 34 226 52 Q228 60 224 66 L222 55 Q212 40 200 40 Q188 40 178 55 L176 66 Z"
+                                fill="#1a0e08" />
+                            <ellipse cx="174" cy="64" rx="5" ry="7" fill="#b89878" />
+                            <ellipse cx="226" cy="64" rx="5" ry="7" fill="#b89878" />
+                            <rect x="192" y="88" width="16" height="18" fill="#c8a888" />
+                            <path
+                                d="M165 106 Q148 102 135 115 L120 165 L280 165 L265 115 Q252 102 235 106 L220 112 Q208 120 200 118 Q192 120 180 112 Z"
+                                fill="rgba(31,111,176,0.2)" stroke="rgba(31,111,176,0.5)" stroke-width="1.2" />
+                            <line x1="200" y1="117" x2="200" y2="164" stroke="rgba(31,111,176,0.25)" stroke-width="1" />
+                            <path d="M190 140 Q195 135 200 140 Q205 145 210 140" stroke="rgba(31,111,176,0.4)"
+                                stroke-width="1.2" fill="none" />
+                            <path
+                                d="M120 165 Q108 225 100 300 Q96 360 98 410 L155 410 L168 290 L200 285 L232 290 L245 410 L302 410 Q304 360 300 300 Q292 225 280 165 Z"
+                                fill="rgba(240,245,238,0.85)" stroke="rgba(20,25,15,0.1)" stroke-width="1" />
+                            <path d="M135 116 Q112 122 105 155 Q100 175 108 185 L128 172 L135 140 Z"
+                                fill="rgba(31,111,176,0.15)" stroke="rgba(31,111,176,0.4)" stroke-width="1" />
+                            <path d="M265 116 Q288 122 295 155 Q300 175 292 185 L272 172 L265 140 Z"
+                                fill="rgba(31,111,176,0.15)" stroke="rgba(31,111,176,0.4)" stroke-width="1" />
+                            <ellipse cx="108" cy="190" rx="10" ry="13" fill="#c8a888" />
+                            <ellipse cx="292" cy="190" rx="10" ry="13" fill="#c8a888" />
+                            <path d="M90 410 Q85 420 82 428 L152 428 L155 415 Z" fill="#1a1c17"
+                                stroke="rgba(31,111,176,0.45)" stroke-width="1" />
+                            <path d="M248 415 L245 428 L318 428 Q315 420 310 410 Z" fill="#1a1c17"
+                                stroke="rgba(31,111,176,0.45)" stroke-width="1" />
+                            <line x1="82" y1="425" x2="152" y2="425" stroke="rgba(31,111,176,0.55)" stroke-width="1.5" />
+                            <line x1="245" y1="425" x2="318" y2="425" stroke="rgba(31,111,176,0.55)"
+                                stroke-width="1.5" />
+                            <text x="20" y="460" font-family="monospace" font-size="8"
+                                fill="rgba(255,255,255,0.35)">Dhruv Dawre</text>
+                            <text x="20" y="472" font-family="monospace" font-size="7" fill="rgba(31,111,176,0.5)">NIFT
+                                Bhopal · SEM 5</text>
+                        </svg>
+                        <div class="tape-h" style="width:75px;height:20px;top:-8px;left:60px;transform:rotate(-5deg);">
+                        </div>
+                        <div class="tape-h"
+                            style="width:60px;height:17px;bottom:40px;right:20px;transform:rotate(8deg);background:rgba(111,143,30,0.16);">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- FOOTER -->
+    <footer>
+        <div class="ft-left">© 2026 Dhruv Dawre - All rights reserved</div>
+        <div class="ft-right">NIFT Bhopal · <span>Knitwear Design</span></div>
+    </footer>
+ 
+    <!-- PROJECT DETAIL MODAL -->
+    <div class="modal-bg" id="modalBg" onclick="closeModal(event)">
+        <div class="modal-box" id="modalBox">
+            <button class="modal-close-btn" onclick="closeModalDirect()">✕</button>
+            <div class="modal-vis" id="modalVis"></div>
+            <div class="modal-body">
+                <div class="modal-cat-m" id="mCat"></div>
+                <div class="modal-title-m" id="mTitle"></div>
+                <div class="modal-desc-m" id="mDesc"></div>
+                <button id="modalPdfBtn" class="modal-pdf-btn" onclick="openPdfViewer()" style="display:none;">
+                    📄 View Full PDF
+                </button>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- ══════════════════════════════════════════════════════
+         CERTIFICATE MODAL
+         Same look as project modal.
+         Add certificate images in the certData array in JS.
+    ══════════════════════════════════════════════════════ -->
+    <div id="certModalBg" onclick="closeCertModal(event)">
+        <div class="cert-modal" id="certModalBox">
+ 
+            <!-- Modal header -->
+            <div class="cert-modal-head">
+                <div class="cert-modal-head-left">
+                    <div class="cert-modal-eyebrow">Achievements</div>
+                    <div class="cert-modal-title">Certificates &amp; Recognitions</div>
+                </div>
+                <button class="cert-modal-close" onclick="closeCertModalDirect()">✕</button>
+            </div>
+ 
+            <!-- Modal body: certificate grid -->
+            <div class="cert-modal-body">
+                <p class="cert-intro">"Each certificate is a milestone in the creative journey - from classroom to craft."</p>
+                <div class="cert-grid" id="certGrid">
+                    <!-- Rendered by JS from certData array below -->
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- SECURE PDF VIEWER OVERLAY -->
+    <div id="pdfViewerOverlay">
+        <div class="pdf-viewer-bar">
+            <div class="pdf-viewer-left">
+                <div class="pdf-viewer-title" id="pdfViewerTitle">Portfolio</div>
+                <div class="pdf-viewer-notice">View Only - Download Disabled</div>
+            </div>
+            <button class="pdf-viewer-close" onclick="closePdfViewer()">✕ Close</button>
+        </div>
+        <div class="pdf-iframe-wrap">
+            <div class="pdf-iframe-guard" oncontextmenu="return false;"></div>
+            <iframe id="pdfFrame" src="" title="Portfolio PDF" oncontextmenu="return false;"></iframe>
+        </div>
+    </div>
+ 
+ 
+    <script>
+ 
+    // ── Cursor ──
+    const cur  = document.getElementById('cur');
+    const cur2 = document.getElementById('cur2');
+    let mx=0, my=0, fx=0, fy=0;
+    document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
+    (function loop(){ fx+=(mx-fx)*.1; fy+=(my-fy)*.1; cur2.style.left=fx+'px'; cur2.style.top=fy+'px'; requestAnimationFrame(loop); })();
+ 
+    // ── Background blobs ──
+    const canvas = document.getElementById('bgCanvas');
+    const ctx    = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    window.addEventListener('resize', ()=>{ canvas.width=window.innerWidth; canvas.height=window.innerHeight; });
+    const blobs = [
+        { x:canvas.width*.15, y:canvas.height*.25, r:280, vx:.14,  vy:.1,   c:'13,59,102',   a:.04 },
+        { x:canvas.width*.8,  y:canvas.height*.6,  r:220, vx:-.12, vy:.12,  c:'208,158,87',  a:.035},
+        { x:canvas.width*.5,  y:canvas.height*.8,  r:180, vx:.08,  vy:-.14, c:'93,122,120',  a:.035},
+        { x:canvas.width*.7,  y:canvas.height*.15, r:160, vx:-.1,  vy:.08,  c:'159,183,201', a:.04 },
+    ];
+    (function drawBg(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        blobs.forEach(b=>{
+            const g=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r);
+            g.addColorStop(0,`rgba(${b.c},${b.a})`); g.addColorStop(1,`rgba(${b.c},0)`);
+            ctx.fillStyle=g; ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2); ctx.fill();
+            b.x+=b.vx; b.y+=b.vy;
+            if(b.x<-b.r||b.x>canvas.width+b.r)  b.vx*=-1;
+            if(b.y<-b.r||b.y>canvas.height+b.r) b.vy*=-1;
+        });
+        requestAnimationFrame(drawBg);
+    })();
+ 
+    document.addEventListener('contextmenu', e => e.preventDefault());
+ 
+    /* ── Smooth scroll helper ── */
+    function scrollToSection(selector) {
+        const el = document.querySelector(selector);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+ 
+ 
+    /* ════════════════════════════════════════════════════════════
+       PORTFOLIO DATA
+       link  → PDF filename (same folder mein)
+       thumb → thumbnail image path (optional, '' = gradient)
+    ════════════════════════════════════════════════════════════ */
+    const portData = [
+        {
+            title:  'Active Forecast S/S 27: BIO-SYNC ECOSYSTEMS',
+            cat:    'DS Assignment 1',
+            filter: 'knitwear',
+            c1:     '#CED8E4', c2: '#9FADB6',
+            accent: 'rgba(13,59,102,0.6)',
+            desc:   'In a climate-adaptive and hyper-urban world,Bio-Sync Ecosystems explores how nature’s intelligence can be translated into accessible, durable, and performance-driven sportswear. The focus shifts from imitation to functional biomimicry, where garments behave like living systems—breathing, adapting, protecting, and responding.',
+            link:   'Portfolio/DS Sports wear/Forecast/Active Forecast SS 27 Biosync.pdf',
+            thumb:  'Portfolio/DS Sports wear/Forecast/Active Forecast SS 27 Biosync.png'
+        },
+        {
+            title:  'Illustration 1 for Decathlon',
+            cat:    'Fashion Illustration',
+            filter: 'fashion-illustration',
+            c1:     '#EAE0C8', c2: '#D09E57',
+            accent: 'rgba(93,122,120,0.7)',
+            desc:   'A series of fashion illustrations for Decathlon, showcasing the brand’s latest sportswear collection.',
+            link:   'Portfolio/Fashion Illustrator/Illustration 1 for Decathlon.pdf',
+            thumb:  'Portfolio/Fashion Illustrator/Illustration 1 for Decathlon.png'
+        },
+         {
+            title:  'Westside Research & Garment Design',
+            cat:    'IDM-TD',
+            filter: 'more',
+            c1:     '#CED8E4', c2: '#A0AAB6',
+            accent: 'rgba(13,59,102,0.5)',
+            desc:   'Pre-collection concept pages - torn paper, found textures, colour chips, rough sketches, and handwritten notes. Raw but essential to every project start.',
+            link:   'Portfolio/IDM-TD/DHRUV-IDM JURY.pdf',
+            thumb:  'Portfolio/IDM-TD/Westside.png'
+        },
+        {
+            title:  'Illustration 2 for Decathlon',
+            cat:    'Fashion Illustration',
+            filter: 'fashion-illustration',
+            c1:     '#BFCAB5', c2: '#9FADB6',
+            accent: 'rgba(13,59,102,0.55)',
+            desc:   'A series of fashion illustrations for Decathlon, showcasing the brand’s latest sportswear collection.',
+            link:   'Portfolio/Fashion Illustrator/Illustration 2 for Decathlon.pdf',
+            thumb:  'Portfolio/Fashion Illustrator/Illustration 2 for Decathlon.png'
+        },
+        {
+            title:  'Decathlon Brand Research ',
+            cat:    'DS Assignment 2',
+            filter: 'knitwear',
+            c1:     '#CED8E4', c2: '#9FADB6',
+            accent: 'rgba(13,59,102,0.6)',
+            desc:   'A Comprehensive brand research and anaysis of Decathlon, including its history, brand indentity, product range, and market positioning. The resarch also includes a detailed study of the brands target audience, competitors, and marketing strategies.',
+            link:   'Portfolio/DS Sports wear/Jury assign Pictures/Decathlon Jury Assignment.pdf',
+            thumb:  'Portfolio/DS Sports wear/Jury assign Pictures/Decathlon Jury Assignment.png'
+        },
+        {
+            title:  'Pattern Making & Garment Construction',
+            cat:    'PMGC',
+            filter: 'pmgc',
+            c1:     '#E5E2D0', c2: '#BBBBA1',
+            accent: 'rgba(93,122,120,0.6)',
+            desc:   'Editorial type composition for a hypothetical streetwear label. Broken grid, overlapping headlines, and a colour system derived from screen-print ink mixing.',
+            link:   '',
+            thumb:  ''
+        },
+         {
+            title:  'Westside Research & Garment Design',
+            cat:    'IDM-TD',
+            filter: 'more',
+            c1:     '#CED8E4', c2: '#A0AAB6',
+            accent: 'rgba(13,59,102,0.5)',
+            desc:   'Pre-collection concept pages - torn paper, found textures, colour chips, rough sketches, and handwritten notes. Raw but essential to every project start.',
+            link:   'Portfolio/IDM-TD/DHRUV-IDM JURY.pdf',
+            thumb:  'Portfolio/Photoshop/Product Advertisment.jpg'
+        },
+        {
+            title:  'Pattern Making & Garment Construction',
+            cat:    'PMGC',
+            filter: 'pmgc',
+            c1:     '#CED8E4', c2: '#A0AAB6',
+            accent: 'rgba(13,59,102,0.5)',
+            desc:   'Pre-collection concept pages - torn paper, found textures, colour chips, rough sketches, and handwritten notes. Raw but essential to every project start.',
+            link:   'Portfolio/Indesign/f1.pdf',
+            thumb:  'Portfolio/Indesign/f1.png'
+        },
+    ];
+ 
+    /* Gradient fallback SVG */
+    function gradSVG(c1, c2, acc, title) {
+        const id = Math.random().toString(36).slice(2,6);
+        return `<svg width="100%" height="100%" viewBox="0 0 300 375" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="g_${id}" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="${c1}"/>
+                    <stop offset="100%" stop-color="${c2}"/>
+                </linearGradient>
+                <pattern id="p_${id}" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <path d="M0 5 Q2.5 0 5 5 Q7.5 10 10 5" stroke="${acc}" stroke-width="0.8" fill="none"/>
+                </pattern>
+            </defs>
+            <rect width="300" height="375" fill="${c1}"/>
+            <rect width="300" height="375" fill="url(#g_${id})" opacity="0.8"/>
+            <rect width="300" height="375" fill="url(#p_${id})" opacity="0.4"/>
+            <text x="150" y="195" text-anchor="middle" dominant-baseline="middle"
+                font-family="monospace" font-size="11" fill="${acc}" opacity="0.8">${title}</text>
+        </svg>`;
+    }
+ 
+    /* Render portfolio */
+    function renderPort(filter) {
+        const grid  = document.getElementById('portGrid');
+        const items = filter === 'all' ? portData : portData.filter(i => i.filter === filter);
+        grid.innerHTML = items.map(item => {
+            const idx    = portData.indexOf(item);
+            const bg     = item.thumb
+                ? `<img class="pi-thumb" src="${item.thumb}" alt="${item.title}"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                   <div class="pi-vis" style="display:none;">${gradSVG(item.c1,item.c2,item.accent,item.title)}</div>`
+                : `<div class="pi-vis">${gradSVG(item.c1,item.c2,item.accent,item.title)}</div>`;
+            const pdfTag = item.link ? `<div class="pi-pdf-tag">PDF</div>` : '';
+            return `<div class="port-item" onclick="openModal(${idx})">
+                ${bg}${pdfTag}
+                <div class="pi-info">
+                    <div class="pi-cat">${item.cat}</div>
+                    <div class="pi-name">${item.title}</div>
+                    <button class="pi-open-btn">View Project →</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+    renderPort('all');
+ 
+    function filterPort(f, btn) {
+        document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderPort(f);
+    }
+ 
+    /* Gallery */
+    const galColors = [
+        ['#CED8E4','#9FADB6','rgba(13,59,102,0.5)',  'F1 Collection', 200, 'F1 Collection.pdf'],
+        ['#EAE0C8','#D09E57','rgba(93,122,120,0.6)',  'Photoshop Work',240, 'Photoshop.pdf'],
+        ['#BFCAB5','#9FADB6','rgba(13,59,102,0.5)',   'Illustration',  200, 'Illustration.pdf'],
+        ['#B1BACB','#6F8596','rgba(13,59,102,0.55)',  'F1 Sketches',   260, 'f1.pdf'],
+        ['#E5E2D0','#BBBBA1','rgba(93,122,120,0.5)',  'Moodboard',     185, ''],
+        ['#CED8E4','#A0AAB6','rgba(13,59,102,0.45)',  'Texture Study', 230, ''],
+        ['#EAE0C8','#DAAF88','rgba(93,122,120,0.5)',  'Doodle Series', 210, ''],
+        ['#BFCAB5','#5D7A78','rgba(13,59,102,0.5)',   'Croquis',       250, ''],
+        ['#E5E2D0','#B1BEB7','rgba(112,128,144,0.5)', 'Colour Story',  195, ''],
+    ];
+    document.getElementById('galGrid').innerHTML = galColors.map(([c1,c2,acc,lbl,h,pdf],i)=>`
+        <div class="gal-item" onclick="openGalModal(${i})">
+            <svg width="100%" height="${h}" viewBox="0 0 300 ${h}" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="gg_${i}" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="${c1}"/>
+                    <stop offset="100%" stop-color="${c2}"/>
+                </linearGradient></defs>
+                <rect width="300" height="${h}" fill="url(#gg_${i})"/>
+                <text x="150" y="${h/2}" text-anchor="middle" dominant-baseline="middle"
+                    font-family="monospace" font-size="10" fill="${acc}">${lbl}</text>
+                <text x="150" y="${h/2+18}" text-anchor="middle"
+                    font-family="monospace" font-size="8" fill="${acc.replace(/,[^)]+\)/,',0.4)')}">2024 - 2025</text>
+            </svg>
+            <div class="gal-hover"><div class="gal-plus">${pdf?'↗':'+'}</div></div>
+        </div>`).join('');
+ 
+ 
+    /* ════════════════════════════════════════════════════════════
+       CERTIFICATE DATA
+       ════════════════════════════════════════════════════════════
+ 
+       HOW TO ADD CERTIFICATE IMAGES:
+       1. Save your certificate image in project folder
+          e.g. certificates/cert-1.jpg
+       2. Set  img: 'certificates/cert-1.jpg'
+       3. Fill in name, issuer, year
+ 
+       img: '' means no image yet - placeholder shows instead.
+ 
+       ════════════════════════════════════════════════════════════ */
+    const certData = [
+        {
+            name:   'Christmas Wonderland Event',
+            issuer: 'Bansal Group',
+            year:   '2024',
+            img:    'Certificates/Bansal Group.jpeg'   // ← e.g. 'certificates/nift-award.jpg'
+        },
+        {
+            name:   'Converge Panchkula',
+            issuer: 'National Institute of Fashion Technology, Panchkula',
+            year:   '2024',
+            img:    'Certificates/Converge Panchkula Certificate.jpeg'   // ← e.g. 'certificates/knitwear-workshop.jpg'
+        },
+        {
+            name:   'Bhopal Literature Festival - Volunteering',
+            issuer: 'National Institute of Fashion Technology, Bhopal',
+            year:   '2025',
+            img:    'Certificates/NIFT Certificate.jpeg'   // ← e.g. 'certificates/illustration-cert.jpg'
+        },
+        {
+            name:   'Spectrum-25: BGMI Game',
+            issuer: 'National Institute of Fashion Technology, Bhopal',
+            year:   '2025',
+            img:    'Certificates/Spectrum Certificate.jpeg'   // ← e.g. 'certificates/graphic-design.jpg'
+        },
+        {
+            name:   'Artisan Awareness Workshop/Craft Bazaar',
+            issuer: 'Anuttara 2 - at National Institute of Fashion Technology, Bhopal',
+            year:   '2026',
+            img:    'Certificates/NIFT Craft Bazar certificate.jpeg'   // ← e.g. 'certificates/graphic-design.jpg'
+        },
+    
+        {
+            name:   'Tribal Art Camp',
+            issuer: 'Tribal Art Camp',
+            year:   '2026',
+            img:    'Certificates/Tribal Craft Camp Certificate.jpeg'   // ← e.g. 'certificates/graphic-design.jpg'
+        },
+    ];
+ 
+    /* Render certificate grid */
+    document.getElementById('certGrid').innerHTML = certData.map((c, i) => {
+        const imgContent = c.img
+            ? `<img class="cert-img" src="${c.img}" alt="${c.name}"
+                    onerror="this.outerHTML='<div class=cert-img-placeholder><div class=cert-ph-icon>🏆</div><div class=cert-ph-text>Certificate ${i+1}</div></div>'">`
+            : `<div class="cert-img-placeholder">
+                    <div class="cert-ph-icon">🏆</div>
+                    <div class="cert-ph-text">Add Image</div>
+               </div>`;
+        return `<div class="cert-card">
+            <div class="cert-img-wrap">${imgContent}</div>
+            <div class="cert-info">
+                <div class="cert-name">${c.name}</div>
+                <div class="cert-issuer">${c.issuer}</div>
+                <div class="cert-year">${c.year}</div>
+            </div>
+        </div>`;
+    }).join('');
+ 
+ 
+    /* ── Certificate Modal ──
+       FIX: lock the page's own scroll position while open (instead of just
+       overflow:hidden), and reset the popup's internal scroll to the top
+       each time it opens, so wheel/trackpad scrolling inside the popup is
+       smooth and doesn't fight with or jump the page behind it. */
+    let certScrollY = 0;
+
+    function openCertModal() {
+        certScrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${certScrollY}px`;
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.overflow = 'hidden';
+
+        document.getElementById('certModalBg').classList.add('open');
+        const box = document.getElementById('certModalBox');
+        if (box) box.scrollTop = 0;
+    }
+    function closeCertModal(e) {
+        if (e.target === document.getElementById('certModalBg')) closeCertModalDirect();
+    }
+    function closeCertModalDirect() {
+        document.getElementById('certModalBg').classList.remove('open');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, certScrollY);
+    }
+ 
+ 
+    /* ── Project / Gallery Modal ── */
+    let currentPdfPath = '';
+    const pdfBtn = document.getElementById('modalPdfBtn');
+ 
+    function setModal(cat, title, desc, link, visHTML) {
+        document.getElementById('mCat').textContent   = cat;
+        document.getElementById('mTitle').textContent = title;
+        document.getElementById('mDesc').textContent  = desc;
+        document.getElementById('modalVis').innerHTML = visHTML;
+        currentPdfPath = link || '';
+        pdfBtn.style.display = link ? 'inline-flex' : 'none';
+        document.getElementById('modalBg').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+ 
+    function openModal(idx) {
+        const d  = portData[idx];
+        const id = Math.random().toString(36).slice(2,6);
+        const visHTML = d.thumb
+            ? `<img class="modal-thumb-img" src="${d.thumb}" alt="${d.title}" onerror="this.style.display='none';">
+               ${d.link ? '<span class="modal-pdf-badge">PDF Available</span>' : ''}`
+            : `<svg class="modal-thumb-svg" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+                   <defs><linearGradient id="mv_${id}" x1="0" y1="0" x2="1" y2="1">
+                       <stop offset="0%" stop-color="${d.c1}"/>
+                       <stop offset="100%" stop-color="${d.c2}"/>
+                   </linearGradient></defs>
+                   <rect width="700" height="320" fill="url(#mv_${id})"/>
+                   <text x="350" y="165" text-anchor="middle" dominant-baseline="middle"
+                       font-family="monospace" font-size="18" fill="${d.accent}">${d.title}</text>
+               </svg>
+               ${d.link ? '<span class="modal-pdf-badge">PDF Available</span>' : ''}`;
+        setModal(d.cat, d.title, d.desc, d.link, visHTML);
+    }
+ 
+    function openGalModal(i) {
+        const [c1,c2,acc,lbl,h,pdf] = galColors[i];
+        const id = Math.random().toString(36).slice(2,6);
+        const visHTML = `<svg class="modal-thumb-svg" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="gv_${id}" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="${c1}"/>
+                <stop offset="100%" stop-color="${c2}"/>
+            </linearGradient></defs>
+            <rect width="700" height="320" fill="url(#gv_${id})"/>
+            <text x="350" y="165" text-anchor="middle" dominant-baseline="middle"
+                font-family="monospace" font-size="18" fill="${acc}">${lbl}</text>
+        </svg>
+        ${pdf ? '<span class="modal-pdf-badge">PDF Available</span>' : ''}`;
+        setModal('Visual Archive', lbl, 'A piece from the studio archive - capturing texture, process, and material exploration.', pdf, visHTML);
+    }
+ 
+    function closeModal(e)     { if(e.target===document.getElementById('modalBg')) closeModalDirect(); }
+    function closeModalDirect(){ document.getElementById('modalBg').classList.remove('open'); document.body.style.overflow=''; }
+ 
+    document.addEventListener('keydown', e => {
+        if(e.key==='Escape'){
+            closePdfViewer();
+            closeModalDirect();
+            closeCertModalDirect();
+        }
+    });
+ 
+function scrollToSection(selector) {
+    const el = document.querySelector(selector);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+    /* ── Secure PDF Viewer ── */
+    function openPdfViewer() {
+        if (!currentPdfPath) return;
+        document.getElementById('modalBg').classList.remove('open');
+        const frame = document.getElementById('pdfFrame');
+        frame.src   = currentPdfPath + '#toolbar=0&navpanes=0&scrollbar=1&view=FitH';
+        document.getElementById('pdfViewerTitle').textContent = document.getElementById('mTitle').textContent;
+        document.getElementById('pdfViewerOverlay').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closePdfViewer() {
+        document.getElementById('pdfViewerOverlay').classList.remove('open');
+        setTimeout(() => { document.getElementById('pdfFrame').src = ''; }, 350);
+        document.body.style.overflow = '';
+    }
+ 
+    /* ── Scroll reveal ── */
+    const obs = new IntersectionObserver(
+        entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); }),
+        { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+  
+    // for privacy
+document.addEventListener("contextmenu",e=>e.preventDefault());
+document.addEventListener("copy",e=>e.preventDefault());
+document.addEventListener("cut",e=>e.preventDefault());
+document.addEventListener("paste",e=>e.preventDefault());
+
+document.addEventListener("keydown",function(e){
+ if(e.ctrlKey && ["c","s","u","a","p","x"].includes(e.key.toLowerCase())) e.preventDefault();
+ if(e.key==="F12") e.preventDefault();
+});
+
+setInterval(()=>{
+ const t=160;
+ if(window.outerWidth-window.innerWidth>t||window.outerHeight-window.innerHeight>t){
+   document.body.innerHTML="<h1 style='text-align:center;margin-top:20%'>Developer Tools Detected</h1>";
+ }
+},1000);
+
+document.addEventListener("visibilitychange",()=>{
+ document.body.style.filter=document.hidden?"blur(20px)":"none";
+});
+
+window.addEventListener("load",()=>{
+ document.querySelectorAll("img").forEach(img=>{
+   img.draggable=false;
+   img.addEventListener("contextmenu",e=>e.preventDefault());
+ });
+});
+
+    </script>
+</body>
+</html>
