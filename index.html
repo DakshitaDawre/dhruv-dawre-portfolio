@@ -1189,6 +1189,44 @@ footer {
     .gal-grid { columns: 1; }
     .hero-desc-row { flex-direction: column; align-items: flex-start; gap: 2rem; }
 }
+
+/* ══════════════════════════════════════════════════
+   PORTFOLIO FILTER — MOBILE OPTIMIZATION
+   On small screens the filter row (All / DS Sport
+   Knitwear / Fashion Illustration / PMGC / More) no
+   longer forces a single tight row. It becomes a
+   horizontally scrollable pill row (thumb-swipeable,
+   no layout squeeze), with slightly tighter padding
+   and font-size so labels stay readable.
+══════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+    .port-filter {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        border-radius: 3px;
+        flex-wrap: nowrap;
+    }
+    .port-filter::-webkit-scrollbar { display: none; }
+    .pf-btn {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        padding: 0.6rem 1.1rem;
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 560px) {
+    .pf-btn {
+        padding: 0.55rem 0.9rem;
+        font-size: 0.56rem;
+        letter-spacing: 0.1em;
+    }
+}
+
  /* ══════════════════════════════════════════════════
            HIGHLIGHT TAGS - clickable, each unique color
            Click → scrolls to their section
