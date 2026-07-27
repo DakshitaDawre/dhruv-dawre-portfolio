@@ -2515,12 +2515,12 @@ document.addEventListener("keydown",function(e){
  if(e.key==="F12") e.preventDefault();
 });
 
-setInterval(()=>{
- const t=160;
- if(window.outerWidth-window.innerWidth>t||window.outerHeight-window.innerHeight>t){
-   document.body.innerHTML="<h1 style='text-align:center;margin-top:20%'>Developer Tools Detected</h1>";
- }
-},1000);
+// setInterval(()=>{
+//  const t=160;
+//  if(window.outerWidth-window.innerWidth>t||window.outerHeight-window.innerHeight>t){
+//    document.body.innerHTML="<h1 style='text-align:center;margin-top:20%'>Developer Tools Detected</h1>";
+//  }
+// },1000);
 
 document.addEventListener("visibilitychange",()=>{
  document.body.style.filter=document.hidden?"blur(20px)":"none";
