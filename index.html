@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dhruv Dawre — Knitwear Design</title>
+    <title>Dhruv Dawre - Knitwear Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&display=swap"
@@ -39,6 +39,21 @@
     --mustard:#E7C78A;
     --soft-stone:#CED8E4;
     --light-beige:#DAAF88;
+}
+
+body{
+ user-select:none;
+ -webkit-user-select:none;
+ -webkit-touch-callout:none;
+}
+input,textarea{user-select:text;}
+img{
+ -webkit-user-drag:none;
+ user-drag: none;
+ pointer-events:none;
+}
+@media print{
+ body{display:none!important;}
 }
 
 *,
@@ -684,8 +699,13 @@ section { position: relative; z-index: 5; }
     cursor: none;
 }
 
+/* FIX: object-fit changed from "fill" (distorts/stretches images) to "cover"
+   (crops proportionally, no stretching) for both SVG placeholder visuals
+   and real thumbnail images in the portfolio grid. */
 .pi-vis {
     width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
     position: absolute; inset: 0;
     transition: transform .6s cubic-bezier(.23, 1, .32, 1);
 }
@@ -754,6 +774,9 @@ section { position: relative; z-index: 5; }
 
 .modal-pdf-btn:hover { background: var(--neon); color: var(--warm-ivory); transform: translateY(-2px); }
 
+/* FIX: modal visual box now scales down on smaller screens instead of
+   staying fixed at 320px, and the thumb image uses "cover" so it isn't
+   stretched. */
 .modal-vis {
     height: 320px;
     position: relative;
@@ -784,6 +807,8 @@ section { position: relative; z-index: 5; }
     text-transform: uppercase;
 }
 
+/* FIX: object-fit "fill" -> "cover" so portfolio thumbnail images
+   are cropped proportionally rather than stretched/squashed. */
 .pi-thumb {
     width: 100%; height: 100%;
     object-fit: cover;
@@ -1174,8 +1199,62 @@ footer {
     .gal-grid { columns: 1; }
     .hero-desc-row { flex-direction: column; align-items: flex-start; gap: 2rem; }
 }
+
+/* ══════════════════════════════════════════════════
+   PORTFOLIO FILTER — MOBILE OPTIMIZATION
+   On small screens the filter row (All / DS Sport
+   Knitwear / Fashion Illustration / PMGC / More) no
+   longer forces a single tight row. It becomes a
+   horizontally scrollable pill row (thumb-swipeable,
+   no layout squeeze), with slightly tighter padding
+   and font-size so labels stay readable.
+══════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+    .port-filter {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        border-radius: 3px;
+        flex-wrap: nowrap;
+    }
+    .port-filter::-webkit-scrollbar { display: none; }
+    .pf-btn {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        padding: 0.6rem 1.1rem;
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 560px) {
+    .pf-btn {
+        padding: 0.55rem 0.9rem;
+        font-size: 0.56rem;
+        letter-spacing: 0.1em;
+    }
+}
+
+/* ══════════════════════════════════════════════════
+   PORTFOLIO GRID — IMAGE SIZE FIX (large screen + mobile)
+   Keeps a consistent, proportion-correct aspect ratio at
+   every breakpoint so thumbnails never look stretched or
+   overly tall/short depending on column count.
+══════════════════════════════════════════════════ */
+.port-item { aspect-ratio: 4/5; }
+
+@media (max-width: 900px) {
+    .port-item { aspect-ratio: 1/1; }
+}
+
+@media (max-width: 560px) {
+    .port-item { aspect-ratio: 3/4; }
+}
+
  /* ══════════════════════════════════════════════════
-           HIGHLIGHT TAGS — clickable, each unique color
+           HIGHLIGHT TAGS - clickable, each unique color
            Click → scrolls to their section
            Achievements → opens certificate modal
         ══════════════════════════════════════════════════ */
@@ -1224,7 +1303,7 @@ footer {
         }
         .h-tag:hover .h-arrow { opacity: 1; transform: translateX(0); }
  
-        /* Color 1 — Knitwear Design: Deep Navy */
+        /* Color 1 - Knitwear Design: Deep Navy */
         .ht-navy {
             color: #0D3B66;
             background: rgba(13,59,102,0.08);
@@ -1232,7 +1311,7 @@ footer {
         }
         .ht-navy:hover { background: rgba(13,59,102,0.14); border-color: #0D3B66; }
  
-        /* Color 2 — Fashion Illustration: Dusty Blue */
+        /* Color 2 - Fashion Illustration: Dusty Blue */
         .ht-dusty {
             color: #6F8596;
             background: rgba(111,133,150,0.08);
@@ -1240,7 +1319,7 @@ footer {
         }
         .ht-dusty:hover { background: rgba(111,133,150,0.15); border-color: #6F8596; }
  
-        /* Color 3 — Photography: Olive Teal */
+        /* Color 3 - Photography: Olive Teal */
         .ht-teal {
             color: #5D7A78;
             background: rgba(93,122,120,0.08);
@@ -1248,7 +1327,7 @@ footer {
         }
         .ht-teal:hover { background: rgba(93,122,120,0.15); border-color: #5D7A78; }
  
-        /* Color 4 — Moodboards: Muted Sage */
+        /* Color 4 - Moodboards: Muted Sage */
         .ht-sage {
             color: #6D7C75;
             background: rgba(109,124,117,0.08);
@@ -1256,7 +1335,7 @@ footer {
         }
         .ht-sage:hover { background: rgba(109,124,117,0.15); border-color: #6D7C75; }
  
-        /* Color 5 — Pattern Making: Soft Gold */
+        /* Color 5  Pattern Making: Soft Gold */
         .ht-gold {
             color: #9E7320;
             background: rgba(208,158,87,0.1);
@@ -1264,7 +1343,7 @@ footer {
         }
         .ht-gold:hover { background: rgba(208,158,87,0.18); border-color: #D09E57; }
  
-        /* Color 6 — Achievements: Steel Blue (special — glows) */
+        /* Color 6 - Achievements: Steel Blue (special - glows) */
         .ht-steel {
             color: #708090;
             background: rgba(112,128,144,0.08);
@@ -1329,12 +1408,23 @@ footer {
             width: 92vw;
             max-height: 88vh;
             overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
             transform: translateY(30px) scale(0.97);
             transition: transform 0.4s cubic-bezier(.23,1,.32,1);
             position: relative;
             box-shadow: 0 24px 80px rgba(13,59,102,0.12);
         }
         #certModalBg.open .cert-modal { transform: translateY(0) scale(1); }
+
+        .cert-modal::-webkit-scrollbar { width: 7px; }
+        .cert-modal::-webkit-scrollbar-track { background: transparent; }
+        .cert-modal::-webkit-scrollbar-thumb {
+            background: rgba(13,59,102,0.25);
+            border-radius: 10px;
+        }
+        .cert-modal::-webkit-scrollbar-thumb:hover { background: rgba(13,59,102,0.45); }
  
         /* Header band */
         .cert-modal-head {
@@ -1402,10 +1492,17 @@ footer {
             margin-bottom: 1.8rem;
             line-height: 1.7;
         }
+
+        /* FIX: certificate grid — 2 columns on desktop/tablet,
+           single column on small phones so cards aren't cramped. */
         .cert-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
+        }
+
+        @media (max-width: 560px) {
+            .cert-grid { grid-template-columns: 1fr; }
         }
  
         /* Single certificate card */
@@ -1423,12 +1520,26 @@ footer {
         }
  
         /* Certificate image slot */
+        /* FIX: responsive height so the image box shrinks
+           proportionally on tablet/mobile instead of staying
+           fixed at 200px (which crowded 1-column mobile cards). */
         .cert-img-wrap {
             height: 200px;
             position: relative;
             overflow: hidden;
             background: #EAE0C8;
         }
+
+        @media (max-width: 900px) {
+            .cert-img-wrap { height: 220px; }
+        }
+
+        @media (max-width: 560px) {
+            .cert-img-wrap { height: 260px; }
+        }
+
+        /* FIX: object-fit "fill" -> "cover" so certificate photos crop
+           proportionally instead of stretching/squashing to fit the box. */
         .cert-img {
             width: 100%;
             height: 100%;
@@ -1549,11 +1660,20 @@ footer {
             height: 320px; position: relative; overflow: hidden;
             background: #CED8E4;
         }
+
+        @media (max-width: 900px) {
+            .modal-vis { height: 260px; }
+        }
+
+        @media (max-width: 560px) {
+            .modal-vis { height: 200px; }
+        }
+
         .modal-thumb-img {
             width: 100%; height: 100%;
-            object-fit: cover; object-position: top center; display: block;
+            object-fit: fill; object-position: top center; display: block;
         }
-        .modal-thumb-svg { width: 100%; height: 320px; display: block; }
+        .modal-thumb-svg { width: 100%; height: 100%; display: block; }
         .modal-pdf-badge {
             position: absolute; top: 1rem; right: 1rem;
             background: #0D3B66; color: #fff;
@@ -1563,7 +1683,7 @@ footer {
         }
         .pi-thumb {
             width: 100%; height: 100%;
-            object-fit: cover; object-position: top center;
+            object-fit: fill; object-position: top center;
             position: absolute; inset: 0; display: block;
         }
         .pi-pdf-tag {
@@ -1698,8 +1818,8 @@ footer {
                     <div class="profile-tape-1"></div>
                     <div class="profile-tape-2"></div>
                     <div class="profile-photo img-slot" id="profilePhotoSlot">
-                        <img src="Dhruv Kumar Dawre_2nd Year-4th sem_Nift Bhopal.jpeg" alt="Dhruv Kumar Dawre" onerror="this.style.display='none'">
-                        <div class="profile-photo-name">Dhruv Kumar Dawre — NIFT Bhopal</div>
+                        <img src="Dhruv Kumar Dawre_3rd Year-5th sem_Nift Bhopal.jpeg" alt="Dhruv Kumar Dawre" onerror="this.style.display='none'">
+                        <div class="profile-photo-name">Dhruv Kumar Dawre - NIFT Bhopal</div>
                     </div>
                     <div class="stats-row">
                         <div class="stat-box"><div class="stat-num">05<span>.</span></div><div class="stat-lbl">Semester</div></div>
@@ -1710,9 +1830,9 @@ footer {
                 <div class="about-text">
                     <div class="sec-label reveal">About Me</div>
                     <h2 class="sec-title reveal rd1">Building a language<br>in <em>stitch & pixel</em></h2>
-                    <p class="about-intro reveal rd2">"Design isn't just what it looks like — it's the story you tell before the person even touches the fabric."</p>
-                    <p class="about-body reveal rd3">Hey, I'm Dhruv — a 21-year-old knitwear designer and graphic artist currently in my 4th semester at NIFT, Bhopal. My work lives at the crossing point of tactile craft and digital aesthetics.</p>
-                    <p class="about-body reveal rd3">I'm obsessed with the architecture of knitwear — how a stitch structure can make a garment feel heavy or weightless, structured or fluid. That same thinking drives my graphic work: every layout, typeface choice, and colour decision is load-bearing.</p>
+                    <p class="about-intro reveal rd2">"Design isn't just what it looks like - it's the story you tell before the person even touches the fabric."</p>
+                    <p class="about-body reveal rd3">Hey, I'm Dhruv - a 21-year-old knitwear designer and graphic artist currently in my 4th semester at NIFT, Bhopal. My work lives at the crossing point of tactile craft and digital aesthetics.</p>
+                    <p class="about-body reveal rd3">I'm obsessed with the architecture of knitwear - how a stitch structure can make a garment feel heavy or weightless, structured or fluid. That same thinking drives my graphic work: every layout, typeface choice, and colour decision is load-bearing.</p>
                     <p class="about-body reveal rd4">Currently exploring oversized silhouettes, tonal colour-block knits, and editorial graphic systems that blur the line between fashion and visual art.</p>
  
                     <!-- ══════════════════════════════════════════════
@@ -1798,9 +1918,10 @@ footer {
             <h2 class="sec-title reveal rd1">The <em>Portfolio</em></h2>
             <div class="port-filter reveal rd2" id="portFilter">
                 <button class="pf-btn active" onclick="filterPort('all',this)">All</button>
-                <button class="pf-btn" onclick="filterPort('knitwear',this)">Knitwear</button>
-                <button class="pf-btn" onclick="filterPort('graphics',this)">Graphics</button>
-                <button class="pf-btn" onclick="filterPort('sketches',this)">Sketches</button>
+                <button class="pf-btn" onclick="filterPort('knitwear',this)">DS Sport Knitwear</button>
+                <button class="pf-btn" onclick="filterPort('fashion-illustration',this)">Fashion Illustration</button>
+                <button class="pf-btn" onclick="filterPort('pmgc',this)">PMGC</button>
+                <button class="pf-btn" onclick="filterPort('more',this)">More</button>
             </div>
             <div class="port-grid" id="portGrid"></div>
         </div>
@@ -1850,11 +1971,12 @@ footer {
                     <div style="position:absolute;width:55px;height:16px;background:rgba(208,158,87,0.15);bottom:30px;right:25px;transform:rotate(6deg);border-radius:2px;"></div>
                 </div>
                 <div class="tool-list reveal rd1">
-                    <div class="tool-row"><div class="tool-num">01</div><div class="tool-icon-box b">🧶</div><div class="tool-info"><div class="tool-name-t">Yarn & Fibre</div><div class="tool-desc-t">Merino, mohair, cotton blends — sourced and swatched before any needle touches the machine. Weight, drape, and handle inform every design decision.</div></div></div>
-                    <div class="tool-row"><div class="tool-num">02</div><div class="tool-icon-box c">✏️</div><div class="tool-info"><div class="tool-name-t">Hand Sketching</div><div class="tool-desc-t">Copic markers, fine liners, layout paper. Every collection concept lives on paper first — loose croquis, detail studies, drape experiments.</div></div></div>
-                    <div class="tool-row"><div class="tool-num">03</div><div class="tool-icon-box n">💻</div><div class="tool-info"><div class="tool-name-t">Digital Suite</div><div class="tool-desc-t">Adobe Illustrator for flat sketches & tech packs, Photoshop for mood collages, and Procreate on iPad for expressive editorial illustration.</div></div></div>
-                    <div class="tool-row"><div class="tool-num">04</div><div class="tool-icon-box s">📌</div><div class="tool-info"><div class="tool-name-t">Moodboarding</div><div class="tool-desc-t">Physical boards with fabric swatches, torn references, washi tape, and colour chips — always the anchor before a collection moves to samples.</div></div></div>
-                    <div class="tool-row"><div class="tool-num">05</div><div class="tool-icon-box b">🔢</div><div class="tool-info"><div class="tool-name-t">Stitch Charting</div><div class="tool-desc-t">Hand-drafted stitch charts on graph paper, then digitalised. Cable structures, intarsia motifs, and texture patterns all begin on the grid.</div></div></div>
+                    <div class="tool-row"><div class="tool-num">01</div><div class="tool-icon-box b">🧶</div><div class="tool-info"><div class="tool-name-t">Garment Construction</div><div class="tool-desc-t">Merino, mohair, cotton blends - sourced and swatched before any needle touches the machine. Weight, drape, and handle inform every design decision.</div></div></div>
+                    <div class="tool-row"><div class="tool-num">02</div><div class="tool-icon-box c">✏️</div><div class="tool-info"><div class="tool-name-t">Material Handling</div><div class="tool-desc-t">Copic markers, fine liners, layout paper. Every collection concept lives on paper first - loose croquis, detail studies, drape experiments.</div></div></div>
+                    <div class="tool-row"><div class="tool-num">03</div><div class="tool-icon-box n">💻</div><div class="tool-info"><div class="tool-name-t">Illustration</div><div class="tool-desc-t">Adobe Illustrator for flat sketches & tech packs, Photoshop for mood collages, and Procreate on iPad for expressive editorial illustration.</div></div></div>
+                    <div class="tool-row"><div class="tool-num">04</div><div class="tool-icon-box s">📌</div><div class="tool-info"><div class="tool-name-t">Moodboarding</div><div class="tool-desc-t">Physical boards with fabric swatches, torn references, washi tape, and colour chips - always the anchor before a collection moves to samples.</div></div></div>
+                    <div class="tool-row"><div class="tool-num">05</div><div class="tool-icon-box b">🔢</div><div class="tool-info"><div class="tool-name-t">Design Process</div><div class="tool-desc-t">Hand-drafted stitch charts on graph paper, then digitalised. Cable structures, intarsia motifs, and texture patterns all begin on the grid.</div></div></div>
+                    <div class="tool-row"><div class="tool-num">06</div><div class="tool-icon-box b">📸</div><div class="tool-info"><div class="tool-name-t">Fashion Photography</div><div class="tool-desc-t">Hand-drafted stitch charts on graph paper, then digitalised. Cable structures, intarsia motifs, and texture patterns all begin on the grid.</div></div></div>
                 </div>
             </div>
         </div>
@@ -1864,13 +1986,13 @@ footer {
     <section id="gallery">
         <div class="sec-wrap">
             <div class="sec-label reveal">Visual Archive</div>
-            <h2 class="sec-title reveal rd1">Lookbook &amp; <em>Experiments</em></h2>
-            <p class="gal-intro reveal rd2">"A studio wall in digital form — swatches, sketches, and experiments."</p>
+            <h2 class="sec-title reveal rd1">Lookbook & <em>Experiments</em></h2>
+            <p class="gal-intro reveal rd2">"A studio wall in digital form - swatches, sketches, and experiments."</p>
             <div class="gal-grid" id="galGrid"></div>
         </div>
     </section>
  
-<!-- CONTACT -->
+   <!-- CONTACT -->
     <section id="contact">
         <div class="sec-wrap">
             <div class="contact-grid">
@@ -1970,7 +2092,7 @@ footer {
  
     <!-- FOOTER -->
     <footer>
-        <div class="ft-left">© 2026 Dhruv Dawre — All rights reserved</div>
+        <div class="ft-left">© 2026 Dhruv Dawre - All rights reserved</div>
         <div class="ft-right">NIFT Bhopal · <span>Knitwear Design</span></div>
     </footer>
  
@@ -1996,7 +2118,7 @@ footer {
          Add certificate images in the certData array in JS.
     ══════════════════════════════════════════════════════ -->
     <div id="certModalBg" onclick="closeCertModal(event)">
-        <div class="cert-modal">
+        <div class="cert-modal" id="certModalBox">
  
             <!-- Modal header -->
             <div class="cert-modal-head">
@@ -2009,7 +2131,7 @@ footer {
  
             <!-- Modal body: certificate grid -->
             <div class="cert-modal-body">
-                <p class="cert-intro">"Each certificate is a milestone in the creative journey — from classroom to craft."</p>
+                <p class="cert-intro">"Each certificate is a milestone in the creative journey - from classroom to craft."</p>
                 <div class="cert-grid" id="certGrid">
                     <!-- Rendered by JS from certData array below -->
                 </div>
@@ -2022,7 +2144,7 @@ footer {
         <div class="pdf-viewer-bar">
             <div class="pdf-viewer-left">
                 <div class="pdf-viewer-title" id="pdfViewerTitle">Portfolio</div>
-                <div class="pdf-viewer-notice">View Only — Download Disabled</div>
+                <div class="pdf-viewer-notice">View Only - Download Disabled</div>
             </div>
             <button class="pdf-viewer-close" onclick="closePdfViewer()">✕ Close</button>
         </div>
@@ -2082,64 +2204,64 @@ footer {
     ════════════════════════════════════════════════════════════ */
     const portData = [
         {
-            title:  'F1 Collection',
-            cat:    'Knitwear',
+            title:  'Active Forecast S/S 27: BIO-SYNC ECOSYSTEMS',
+            cat:    'DS Assignment 1',
             filter: 'knitwear',
             c1:     '#CED8E4', c2: '#9FADB6',
             accent: 'rgba(13,59,102,0.6)',
-            desc:   'A complete knitwear collection — structure, silhouette, and stitch all working together. Developed across the semester from initial concept to final presentation.',
-            link:   'F1 Collection.pdf',
-            thumb:  ''
+            desc:   'In a climate-adaptive and hyper-urban world,Bio-Sync Ecosystems explores how nature’s intelligence can be translated into accessible, durable, and performance-driven sportswear. The focus shifts from imitation to functional biomimicry, where garments behave like living systems—breathing, adapting, protecting, and responding.',
+            link:   'Active Forecast SS 27 Biosync.pdf',
+            thumb:  'Active Forecast SS 27 Biosync.png'
         },
         {
-            title:  'Graphic Design Work',
-            cat:    'Graphics',
-            filter: 'graphics',
+            title:  'Illustration 1 for Decathlon',
+            cat:    'Fashion Illustration',
+            filter: 'fashion-illustration',
             c1:     '#EAE0C8', c2: '#D09E57',
             accent: 'rgba(93,122,120,0.7)',
-            desc:   'Editorial graphic compositions using Photoshop — layouts, type experiments, and visual systems built for fashion-forward brand communication.',
-            link:   'Photoshop.pdf',
-            thumb:  ''
+            desc:   'A series of fashion illustrations for Decathlon, showcasing the brand’s latest sportswear collection.',
+            link:   'Illustration 1 for Decathlon.pdf',
+            thumb:  'Illustration 1 for Decathlon.png'
         },
-        {
-            title:  'Fashion Illustrations',
-            cat:    'Sketches',
-            filter: 'sketches',
-            c1:     '#BFCAB5', c2: '#9FADB6',
-            accent: 'rgba(13,59,102,0.55)',
-            desc:   'A series of fashion illustrations created in Adobe Illustrator — exploring proportion, silhouette, and colour across menswear and knitwear croquis.',
-            link:   'Illustration.pdf',
-            thumb:  ''
-        },
-        {
-            title:  'F1 Concept Sketches',
-            cat:    'Knitwear',
-            filter: 'knitwear',
-            c1:     '#B1BACB', c2: '#6F8596',
-            accent: 'rgba(13,59,102,0.6)',
-            desc:   'Early concept development for the F1 collection — rough croquis, stitch notation, yarn swatches, and first-pass silhouette ideas before sampling began.',
-            link:   'f1.pdf',
-            thumb:  ''
-        },
-        {
-            title:  'Typographic Chaos',
-            cat:    'Graphics',
-            filter: 'graphics',
-            c1:     '#E5E2D0', c2: '#BBBBA1',
-            accent: 'rgba(93,122,120,0.6)',
-            desc:   'Editorial type composition for a hypothetical streetwear label. Broken grid, overlapping headlines, and a colour system derived from screen-print ink mixing.',
-            link:   '',
-            thumb:  ''
-        },
-        {
-            title:  'Concept Pages',
-            cat:    'Sketches',
-            filter: 'sketches',
+         {
+            title:  'Westside Research & Garment Design',
+            cat:    'IDM-TD',
+            filter: 'more',
             c1:     '#CED8E4', c2: '#A0AAB6',
             accent: 'rgba(13,59,102,0.5)',
-            desc:   'Pre-collection concept pages — torn paper, found textures, colour chips, rough sketches, and handwritten notes. Raw but essential to every project start.',
-            link:   '',
-            thumb:  ''
+            desc:   'Pre-collection concept pages - torn paper, found textures, colour chips, rough sketches, and handwritten notes. Raw but essential to every project start.',
+            link:   'DHRUV-IDM JURY.pdf',
+            thumb:  'Westside.png'
+        },
+        {
+            title:  'Illustration 2 for Decathlon',
+            cat:    'Fashion Illustration',
+            filter: 'fashion-illustration',
+            c1:     '#BFCAB5', c2: '#9FADB6',
+            accent: 'rgba(13,59,102,0.55)',
+            desc:   'A series of fashion illustrations for Decathlon, showcasing the brand’s latest sportswear collection.',
+            link:   'Illustration 2 for Decathlon.pdf',
+            thumb:  'Illustration 2 for Decathlon.png'
+        },
+        {
+            title:  'Decathlon Brand Research ',
+            cat:    'DS Assignment 2',
+            filter: 'knitwear',
+            c1:     '#CED8E4', c2: '#9FADB6',
+            accent: 'rgba(13,59,102,0.6)',
+            desc:   'A Comprehensive brand research and anaysis of Decathlon, including its history, brand indentity, product range, and market positioning. The resarch also includes a detailed study of the brands target audience, competitors, and marketing strategies.',
+            link:   'Decathlon Jury Assignment.pdf',
+            thumb:  'Decathlon Jury Assignment.png'
+        },
+        {
+            title:  'THE OFFICIAL FORMULA 1 MAGAZINE',
+            cat:    'Photoshop Illustration ',
+            filter: 'more',
+            c1:     '#CED8E4', c2: '#A0AAB6',
+            accent: 'rgba(13,59,102,0.5)',
+            desc:   'Pre-collection concept pages - torn paper, found textures, colour chips, rough sketches, and handwritten notes. Raw but essential to every project start.',
+            link:   'f1.pdf',
+            thumb:  'f1.png'
         },
     ];
  
@@ -2217,7 +2339,7 @@ footer {
                 <text x="150" y="${h/2}" text-anchor="middle" dominant-baseline="middle"
                     font-family="monospace" font-size="10" fill="${acc}">${lbl}</text>
                 <text x="150" y="${h/2+18}" text-anchor="middle"
-                    font-family="monospace" font-size="8" fill="${acc.replace(/,[^)]+\)/,',0.4)')}">2024 — 2025</text>
+                    font-family="monospace" font-size="8" fill="${acc.replace(/,[^)]+\)/,',0.4)')}">2024 - 2025</text>
             </svg>
             <div class="gal-hover"><div class="gal-plus">${pdf?'↗':'+'}</div></div>
         </div>`).join('');
@@ -2233,33 +2355,46 @@ footer {
        2. Set  img: 'certificates/cert-1.jpg'
        3. Fill in name, issuer, year
  
-       img: '' means no image yet — placeholder shows instead.
+       img: '' means no image yet - placeholder shows instead.
  
        ════════════════════════════════════════════════════════════ */
     const certData = [
         {
-            name:   'NIFT Semester Excellence Award',
-            issuer: 'National Institute of Fashion Technology',
+            name:   'Christmas Wonderland Event',
+            issuer: 'Bansal Group',
             year:   '2024',
-            img:    ''   // ← e.g. 'certificates/nift-award.jpg'
+            img:    'Bansal Group.jpeg'   // ← e.g. 'certificates/nift-award.jpg'
         },
         {
-            name:   'Knitwear Design Workshop',
-            issuer: 'NIFT Bhopal',
+            name:   'Converge Panchkula',
+            issuer: 'National Institute of Fashion Technology, Panchkula',
             year:   '2024',
-            img:    ''   // ← e.g. 'certificates/knitwear-workshop.jpg'
+            img:    'Converge Panchkula Certificate.jpeg'   // ← e.g. 'certificates/knitwear-workshop.jpg'
         },
         {
-            name:   'Fashion Illustration Certificate',
-            issuer: 'Adobe Creative Series',
-            year:   '2023',
-            img:    ''   // ← e.g. 'certificates/illustration-cert.jpg'
+            name:   'Bhopal Literature Festival - Volunteering',
+            issuer: 'National Institute of Fashion Technology, Bhopal',
+            year:   '2025',
+            img:    'NIFT Certificate.jpeg'   // ← e.g. 'certificates/illustration-cert.jpg'
         },
         {
-            name:   'Graphic Design Fundamentals',
-            issuer: 'Coursera / CalArts',
-            year:   '2023',
-            img:    ''   // ← e.g. 'certificates/graphic-design.jpg'
+            name:   'Spectrum-25: BGMI Game',
+            issuer: 'National Institute of Fashion Technology, Bhopal',
+            year:   '2025',
+            img:    'Spectrum Certificate.jpeg'   // ← e.g. 'certificates/graphic-design.jpg'
+        },
+        {
+            name:   'Artisan Awareness Workshop/Craft Bazaar',
+            issuer: 'Anuttara 2 - at National Institute of Fashion Technology, Bhopal',
+            year:   '2026',
+            img:    'NIFT Craft Bazar certificate.jpeg'   // ← e.g. 'certificates/graphic-design.jpg'
+        },
+    
+        {
+            name:   'Tribal Art Camp',
+            issuer: 'Tribal Art Camp',
+            year:   '2026',
+            img:    'Tribal Craft Camp Certificate.jpeg'   // ← e.g. 'certificates/graphic-design.jpg'
         },
     ];
  
@@ -2283,17 +2418,36 @@ footer {
     }).join('');
  
  
-    /* ── Certificate Modal ── */
+    /* ── Certificate Modal ──
+       FIX: lock the page's own scroll position while open (instead of just
+       overflow:hidden), and reset the popup's internal scroll to the top
+       each time it opens, so wheel/trackpad scrolling inside the popup is
+       smooth and doesn't fight with or jump the page behind it. */
+    let certScrollY = 0;
+
     function openCertModal() {
-        document.getElementById('certModalBg').classList.add('open');
+        certScrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${certScrollY}px`;
+        document.body.style.left = '0';
+        document.body.style.right = '0';
         document.body.style.overflow = 'hidden';
+
+        document.getElementById('certModalBg').classList.add('open');
+        const box = document.getElementById('certModalBox');
+        if (box) box.scrollTop = 0;
     }
     function closeCertModal(e) {
         if (e.target === document.getElementById('certModalBg')) closeCertModalDirect();
     }
     function closeCertModalDirect() {
         document.getElementById('certModalBg').classList.remove('open');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
         document.body.style.overflow = '';
+        window.scrollTo(0, certScrollY);
     }
  
  
@@ -2318,7 +2472,7 @@ footer {
         const visHTML = d.thumb
             ? `<img class="modal-thumb-img" src="${d.thumb}" alt="${d.title}" onerror="this.style.display='none';">
                ${d.link ? '<span class="modal-pdf-badge">PDF Available</span>' : ''}`
-            : `<svg class="modal-thumb-svg" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+            : `<svg class="modal-thumb-svg" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
                    <defs><linearGradient id="mv_${id}" x1="0" y1="0" x2="1" y2="1">
                        <stop offset="0%" stop-color="${d.c1}"/>
                        <stop offset="100%" stop-color="${d.c2}"/>
@@ -2334,7 +2488,7 @@ footer {
     function openGalModal(i) {
         const [c1,c2,acc,lbl,h,pdf] = galColors[i];
         const id = Math.random().toString(36).slice(2,6);
-        const visHTML = `<svg class="modal-thumb-svg" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+        const visHTML = `<svg class="modal-thumb-svg" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <defs><linearGradient id="gv_${id}" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0%" stop-color="${c1}"/>
                 <stop offset="100%" stop-color="${c2}"/>
@@ -2344,7 +2498,7 @@ footer {
                 font-family="monospace" font-size="18" fill="${acc}">${lbl}</text>
         </svg>
         ${pdf ? '<span class="modal-pdf-badge">PDF Available</span>' : ''}`;
-        setModal('Visual Archive', lbl, 'A piece from the studio archive — capturing texture, process, and material exploration.', pdf, visHTML);
+        setModal('Visual Archive', lbl, 'A piece from the studio archive - capturing texture, process, and material exploration.', pdf, visHTML);
     }
  
     function closeModal(e)     { if(e.target===document.getElementById('modalBg')) closeModalDirect(); }
@@ -2385,7 +2539,15 @@ function scrollToSection(selector) {
         { threshold: 0.1 }
     );
     document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
- 
+  
+
+window.addEventListener("load",()=>{
+ document.querySelectorAll("img").forEach(img=>{
+   img.draggable=false;
+   img.addEventListener("contextmenu",e=>e.preventDefault());
+ });
+});
+
     </script>
 </body>
 </html>
